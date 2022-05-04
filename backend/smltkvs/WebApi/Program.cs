@@ -1,6 +1,15 @@
+using Authentication.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var test = builder.Configuration.GetValue<string>("ConnectionStrings:Authentication");
+
+builder.Services.AddDbContext<AuthenticationContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetValue<string>("ConnectionStrings:Authentication")
+        ));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

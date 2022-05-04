@@ -1,4 +1,4 @@
-namespace smltkvs;
+namespace WebApi;
 
 public class WeatherForecast
 {
