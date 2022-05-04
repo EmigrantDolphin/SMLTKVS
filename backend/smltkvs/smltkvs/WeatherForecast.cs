@@ -1,4 +1,4 @@
-namespace WebApplication;
+namespace smltkvs;
 
 public class WeatherForecast
 {
