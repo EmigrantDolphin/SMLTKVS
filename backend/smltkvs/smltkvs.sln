@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Domain", "Bo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.Persistence", "BoundedContexts\Authentication\Authentication.Persistence\Authentication.Persistence.csproj", "{600904BC-0384-46EE-A663-F477898EB9D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{ABF8A361-916A-4F62-BDFA-A787030055C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{600904BC-0384-46EE-A663-F477898EB9D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{600904BC-0384-46EE-A663-F477898EB9D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{600904BC-0384-46EE-A663-F477898EB9D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF8A361-916A-4F62-BDFA-A787030055C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF8A361-916A-4F62-BDFA-A787030055C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF8A361-916A-4F62-BDFA-A787030055C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF8A361-916A-4F62-BDFA-A787030055C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C1031940-BE37-4919-8A69-6EE0147744AC} = {239034C6-FD49-4317-B55F-8E98ABE4EA87}

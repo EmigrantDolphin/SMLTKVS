@@ -1,18 +1,25 @@
+using Authentication.Application;
+using Authentication.Application.Options;
 using Authentication.Persistence;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var test = builder.Configuration.GetValue<string>("ConnectionStrings:Authentication");
-
+builder.Services.AddMediatR(typeof(AuthenticationMediatR));
 builder.Services.AddDbContext<AuthenticationContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetValue<string>("ConnectionStrings:Authentication")
         ));
 
+builder.Services.Configure<JwtTokenOptions>(builder.Configuration.GetSection("JwtTokenOptions"));
+builder.Services.AddSingleton<JwtTokenConfiguration>();
+builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("JwtTokenOptions").Get<JwtTokenOptions>());
+
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
