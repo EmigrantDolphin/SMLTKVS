@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WebApi;
 
+var CorsOrigins = "_allowCorsOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<AuthenticationContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetValue<string>("ConnectionStrings:Authentication")
         ));
+builder.Services.AddScoped<IAuthenticationContext, AuthenticationContext>();
 
 builder.Services.Configure<JwtTokenOptions>(builder.Configuration.GetSection("JwtTokenOptions"));
 builder.Services.AddSingleton<JwtTokenConfiguration>();
@@ -23,6 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +37,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 app.UseAuthorization();
 
 app.MapControllers();

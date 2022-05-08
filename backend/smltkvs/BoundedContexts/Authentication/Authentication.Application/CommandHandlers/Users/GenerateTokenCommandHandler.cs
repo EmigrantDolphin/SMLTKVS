@@ -22,11 +22,12 @@ public class GenerateTokenCommandHandler : IRequestHandler<GenerateTokenCommand,
 
     public Task<GeneratedTokenDto> Handle(GenerateTokenCommand command, CancellationToken cancellationToken)
     {
-
         var claims = new []
         {
             new Claim(ClaimTypes.Name, command.Username),
-            new Claim("UserId", value: command.UserId.ToString())
+            new Claim(ClaimTypes.Role, command.Role.ToString()),
+            new Claim("UserId", value: command.UserId.ToString()),
+            new Claim("UserRealName", value: command.Name)
         };
 
         var newToken = GenerateAccessToken(claims, DateTime.Now);

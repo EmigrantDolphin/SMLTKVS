@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
 import ConcreteList from './StandardLists/ConcreteList';
+import Clients from './Clients';
 
 function getItem(label, key, icon, children, type) {
   return { key, icon, children, label, type };
 }
 
 const concreteKey = 'concrete';
-const somethingElseKey = 'somethingElse'
+const employeesKey = 'somethingElse'
+const clientsKey = 'clientsElse'
 const items = [
   getItem('Betonas ir gelžbetonis', concreteKey, <MailOutlined />),
-  getItem('Kazkas dar', somethingElseKey, <AppstoreOutlined />)
+  getItem('Darbuotojai', employeesKey, <AppstoreOutlined />),
+  getItem('Klientai', clientsKey, <AppstoreOutlined />)
 ];
 
-const StandardSelection = () => {
+const MainMenu = () => {
     const [selectedItem, setSelectedItem] = useState(concreteKey);
 
   const onClick = (e) => {
@@ -46,9 +49,10 @@ const StandardSelection = () => {
             }}
         >
             {selectedItem === concreteKey && <ConcreteList />}
+            {selectedItem === clientsKey && <Clients />}
         </div>
     </div>
   );
 };
 
-export default StandardSelection;
+export default MainMenu;

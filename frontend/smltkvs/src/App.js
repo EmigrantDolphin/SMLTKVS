@@ -3,7 +3,7 @@ import 'antd/dist/antd.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Profile from './components/Profile';
 import Login from './containers/Login';
-import StandardSelection from './containers/StandardSelection';
+import MainMenu from './containers/MainMenu';
 import ConcreteTrial from './containers/StandardTrials/Concrete/ConcreteTrial';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <div className='App'>
         <Routes>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<StandardSelection />} />
+          <Route path="/" element={<MainMenu />} />
           <Route path="/login" element={<Login />} />
           <Route path="/concreteTrial" element={<ConcreteTrial />} />
         </Routes>

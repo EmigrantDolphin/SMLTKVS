@@ -17,4 +17,7 @@ public class AuthenticationContext : DbContext, IAuthenticationContext
     {
         modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
     }
+
+    public async Task<int> SaveChangesAsync() =>
+        await base.SaveChangesAsync();
 }

@@ -2,6 +2,7 @@ using Authentication.Application.Commands.Users;
 using Infrastructure.OneOf.Extensions;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.Authentication.Models;
 
@@ -18,6 +19,7 @@ public class AuthenticationController : AuthenticationControllerBase
     }
 
     [HttpPost("api/auth/user/login")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RegisterUser([FromBody] LoginRequest request)

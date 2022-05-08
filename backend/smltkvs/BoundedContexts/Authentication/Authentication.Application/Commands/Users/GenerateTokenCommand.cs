@@ -1,6 +1,7 @@
 using Authentication.Application.Commands.Users.ResponseDtos;
+using Authentication.Domain.Enums;
 using MediatR;
 
 namespace Authentication.Application.Commands.Users;
 
-public record GenerateTokenCommand(Guid UserId, string Username) : IRequest<GeneratedTokenDto>;
+public record GenerateTokenCommand(Guid UserId, string Username, Role Role, string Name) : IRequest<GeneratedTokenDto>;
