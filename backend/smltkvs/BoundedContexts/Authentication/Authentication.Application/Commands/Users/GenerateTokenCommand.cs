@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Authentication.Application.Commands.Users;
 
-public record GenerateTokenCommand(Guid UserId, string Username, Role Role, string Name) : IRequest<GeneratedTokenDto>;
+public record GenerateTokenCommand(Guid UserId, string Username, Role Role) : IRequest<GeneratedTokenDto>;

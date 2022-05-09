@@ -8,14 +8,4 @@ public enum Role
     Employee = 1,
     Client = 2
 }
-public class RegisterRequest
-{
-    [Required]
-    public string Username { get; set; }
-    [Required]
-    public string Password { get; set; }
-    [Required]
-    public Role Role { get; set; }
-    public string? Email { get; set; }
-    public string? Name { get; set; }
-}
+public record RegisterRequest([Required] string Username, [Required] string Password, [Required] Role Role, string? Email, string? Name);

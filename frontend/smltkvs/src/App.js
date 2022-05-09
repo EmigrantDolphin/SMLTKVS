@@ -5,6 +5,7 @@ import Profile from './components/Profile';
 import Login from './containers/Login';
 import MainMenu from './containers/MainMenu';
 import ConcreteTrial from './containers/StandardTrials/Concrete/ConcreteTrial';
+import { routes } from './routes';
 
 function App() {
   return (
@@ -12,9 +13,9 @@ function App() {
       <div className='App'>
         <Routes>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<MainMenu />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/concreteTrial" element={<ConcreteTrial />} />
+          <Route path={routes.home} element={<MainMenu />} />
+          <Route path={routes.login} element={<Login />} />
+          <Route path={routes.concreteTrial} element={<ConcreteTrial />} />
         </Routes>
       </div>
     </Router>

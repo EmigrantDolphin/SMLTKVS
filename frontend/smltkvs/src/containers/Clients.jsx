@@ -1,5 +1,8 @@
 import { Table } from 'antd';
 import AddClientModal from './AddClientModal';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers } from '../api/userActions';
 
 const columns = [
   {
@@ -19,44 +22,37 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    email: 32,
-    username: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    email: 42,
-    username: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    email: 32,
-    username: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    email: 32,
-    username: 'London No. 2 Lake Park',
-  },
-];
-
 function onChange(pagination, filters, sorter, extra) {
   console.log('params', pagination, filters, sorter, extra);
 }
 
+const getUserColumnData = (users) => {
+  if (!users) return [];
+
+  return users.map(user => {
+    return {
+      key: user.userId,
+      name: user.name,
+      email: user.email,
+      username: user.username
+    };
+  });
+}
+
 const Clients = () => {
-    return (
-        <>
-            <AddClientModal />
-            <Table columns={columns} dataSource={data} onChange={onChange} />
-        </>
-    );
+  const dispatch = useDispatch();
+  const users = useSelector((state) => {console.log(state); return state.users.value});
+
+  useEffect(() => {
+    getUsers(dispatch);
+  }, [dispatch]);
+
+  return (
+      <>
+          <AddClientModal />
+          <Table columns={columns} dataSource={getUserColumnData(users)} onChange={onChange} />
+      </>
+  );
 }
 
 export default Clients;

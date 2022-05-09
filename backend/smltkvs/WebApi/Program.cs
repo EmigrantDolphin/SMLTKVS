@@ -1,11 +1,12 @@
 using Authentication.Application;
 using Authentication.Application.Options;
+using Authentication.Application.Queries;
+using Authentication.Application.Queries.Interfaces;
 using Authentication.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WebApi;
 
-var CorsOrigins = "_allowCorsOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +21,7 @@ builder.Services.Configure<JwtTokenOptions>(builder.Configuration.GetSection("Jw
 builder.Services.AddSingleton<JwtTokenConfiguration>();
 builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("JwtTokenOptions").Get<JwtTokenOptions>());
 
+builder.Services.AddScoped<IGetUsers, GetUsers>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -41,6 +43,8 @@ app.UseCors(x => x
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader());
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -5,7 +5,7 @@ namespace WebApi.Areas.Authentication.Models;
 public record LoginRequest
 {
     [Required]
-    public Guid UserId { get; init; }
+    public string Username { get; init; }
 
     [Required]
     public string Password { get; init; }

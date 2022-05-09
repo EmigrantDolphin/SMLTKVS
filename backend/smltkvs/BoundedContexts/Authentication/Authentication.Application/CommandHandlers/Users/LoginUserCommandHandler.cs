@@ -22,20 +22,20 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, OneOf<S
 
     public async Task<OneOf<Success<LoggedInUserDto>, BadRequest>> Handle(LoginUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await GetUser(command.UserId, command.Password);
+        var user = await GetUser(command.Username, command.Password);
         if (user == null)
         {
             return new BadRequest("Neteisingas prisijungimo vardas arba slaptažodis");
         }
 
-        var newTokenResponse = await _mediator.Send(new GenerateTokenCommand(user.UserId, user.Username, user.Role, user.Name), cancellationToken);
+        var newTokenResponse = await _mediator.Send(new GenerateTokenCommand(user.UserId, user.Username, user.Role), cancellationToken);
 
         return new Success<LoggedInUserDto>(new LoggedInUserDto(user.UserId, user.Username, newTokenResponse.Token));
     }
 
-    private async Task<User?> GetUser(Guid userId, string password) =>
+    private async Task<User?> GetUser(string username, string password) =>
         await _authContext.Users
-            .Where(x => x.UserId == userId)
+            .Where(x => x.Username == username)
             .Where(x => x.Password == password)
             .FirstOrDefaultAsync();
 }

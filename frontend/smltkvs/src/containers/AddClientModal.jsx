@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Modal, Button, Form, Input, notification } from 'antd';
 import { registerUser } from '../api/userActions';
+import { getUsers } from '../api/userActions';
 import { roles } from '../api/constants/roles';
 
 
 const AddClientModal = () => {
+    const dispatch = useDispatch();
     const [visible, setVisible] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [form] = Form.useForm();
@@ -14,7 +17,7 @@ const AddClientModal = () => {
     };
 
     const handleOk = () => {
-        // setConfirmLoading(true);
+        setConfirmLoading(true);
         form.submit();
     };
 
@@ -27,12 +30,15 @@ const AddClientModal = () => {
             values.name
         )
         .then(result => {
-            setVisible(false);
+            if (result.isOk){
+                setVisible(false);
+                notification.success({
+                    message: 'Sėkmė!',
+                    description: 'Klientas pridėtas sėkmingai'
+                });
+                getUsers(dispatch);
+            }
             setConfirmLoading(false);
-            notification.success({
-                message: 'Sėkmė!',
-                description: 'Klientas pridėtas sėkmingai'
-            });
         });
     }
 

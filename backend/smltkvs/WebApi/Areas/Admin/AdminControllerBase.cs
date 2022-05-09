@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Areas.Admin;
 
 [ApiController]
-// [Authorize("Admin")]
-[AllowAnonymous]
-[ApiExplorerSettings(GroupName = ApiAreas.Auth)]
+[Authorize(Roles = "Admin")]
+[ApiExplorerSettings(GroupName = ApiAreas.Admin)]
 public abstract class AdminControllerBase : ControllerBase { }

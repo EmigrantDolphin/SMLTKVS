@@ -26,15 +26,11 @@ public class AuthenticationController : AuthenticationControllerBase
     {
         try
         {
-            var commandResponse = await _mediatr.Send( new LoginUserCommand(
-                    request.UserId,
-                    request.Password
-                )
-            );
+            var commandResponse = await _mediatr.Send(request.Adapt<LoginUserCommand>());
 
             if (commandResponse.IsSuccess())
             {
-                return Ok(commandResponse.AsSuccess().Adapt<LoginResponse>());
+                return Ok(commandResponse.AsSuccess().Value.Adapt<LoginResponse>());
             }
 
             return BadRequest(commandResponse.AsError().Message);

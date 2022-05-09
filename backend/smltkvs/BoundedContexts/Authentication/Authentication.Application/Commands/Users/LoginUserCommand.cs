@@ -5,4 +5,4 @@ using MediatR;
 
 namespace Authentication.Application.Commands.Users;
 
-public record LoginUserCommand(Guid UserId, string Password) : IRequest<OneOf<Success<LoggedInUserDto>, BadRequest>>;
+public record LoginUserCommand(string Username, string Password) : IRequest<OneOf<Success<LoggedInUserDto>, BadRequest>>;

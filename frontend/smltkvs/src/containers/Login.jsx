@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import { loginUser } from '../api/userActions';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../routes';
 
 const Login = () => {
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
     const onFinish = (values) => {
-        console.log('Success:', values);
+        setIsLoading(true);
+        loginUser(values.username, values.password)
+            .then(loggedIn => {
+                setIsLoading(false);
+                if (loggedIn)
+                    navigate(routes.home);
+            });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -42,12 +54,16 @@ const Login = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
-                <Button type="primary" htmlType="submit">
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={isLoading}
+                >
                     Prisijungti
                 </Button>
             </Form.Item>
         </Form>
-    )
+    );
 }
 
 export default Login;
