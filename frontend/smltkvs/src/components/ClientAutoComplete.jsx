@@ -43,7 +43,7 @@ const ClientAutoComplete = (props) => {
                 style={{
                     width: 200,
                 }}
-                onSelect={(data, dataa) => onSelect(data, dataa, props.onChange)}
+                onSelect={(_, data) => onSelect(_, data, props.onChange)}
             />
         </>
     );

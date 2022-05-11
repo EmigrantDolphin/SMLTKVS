@@ -1,0 +1,52 @@
+ConcreteCubeStrengthTest
+{
+	concreteCubeStrengthTestId: guid,
+	testProtocolNumber: 'Nr. 20252', //BE
+	clientCompanyId: guid, //TODO: create company entity and tie users to it
+	employeeCompanyId: guid,
+	testExecutionDate: date,
+	testObjectsReceivedDate: date,
+	testObjectsReceivedBy: string ['Uzsakovas', 'Uzsakovo igaliotas atstovas', 'vykdytojas'],
+	testObjectsReceivedComment: 'text from latex preloaded. can be changed',
+	testExecutedByUserId: guid,
+	protocolCreatedByUserId: guid,
+	testType: string
+	totalSampleCount: int, 
+	sampleDimensions: string, // FE selection
+	concreteType: string // [ 'sunkusis arba normalusis', 'lengvasis' ]
+	acceptedSampleCount: int, // FE selection: pradine then 3, nuolatine then 1
+	rejectedSampleCount: int, // FE input
+	averageCrushForce: decimal,
+	standardUncertainty: decimal, //standartine neapibreztis
+	extendedUncertainty: decimal, //isplestine neapibreztis
+	standardDeviation: decimal,
+	characteristicDeviation: decimal,
+	concreteRating: string,
+}
+
+ConcreteCubeStrengthData
+{
+	concreteCubeStrengthTestDataId: guid,
+	concreteCubeStrengthTestId: guid,
+	comment: string,
+	destructivePower: decimal,
+	crushingStrength: decimal
+}
+
+crossSectionalDimensions:
+{
+	crossSecionalDimensionid: guid,
+	conconcreteCubeStrengthTestDataId: guid,
+	dimension: enum {a, b}
+	value: decimal
+}
+
+
+Company: {
+	companyId: Guid.NewId(),
+	name: 'AB Lietuvos respublikos gelavandeniu zuvu veisimo, dauginimo ir izuvinimio centras',
+	address: 'Panevezio filijalas, klaipedos g-ve 45',
+	imones kodas: 3735025353
+}
+
+User: {companyId: nullable guid}
