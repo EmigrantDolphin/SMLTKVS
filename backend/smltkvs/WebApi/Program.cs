@@ -3,6 +3,8 @@ using Authentication.Application.Options;
 using Authentication.Application.Queries;
 using Authentication.Application.Queries.Interfaces;
 using Authentication.Persistence;
+using Laboratory.Application;
+using Laboratory.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WebApi;
@@ -10,12 +12,18 @@ using WebApi;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMediatR(typeof(AuthenticationMediatR));
+builder.Services.AddMediatR(typeof(AuthenticationMediatR), typeof(LaboratoryMediatR));
 builder.Services.AddDbContext<AuthenticationContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetValue<string>("ConnectionStrings:Authentication")
         ));
 builder.Services.AddScoped<IAuthenticationContext, AuthenticationContext>();
+
+builder.Services.AddDbContext<LaboratoryContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetValue<string>("ConnectionStrings:Laboratory")
+        ));
+builder.Services.AddScoped<ILaboratoryContext, LaboratoryContext>();
 
 builder.Services.Configure<JwtTokenOptions>(builder.Configuration.GetSection("JwtTokenOptions"));
 builder.Services.AddSingleton<JwtTokenConfiguration>();

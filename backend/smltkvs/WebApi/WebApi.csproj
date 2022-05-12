@@ -23,6 +23,8 @@
     <ItemGroup>
       <ProjectReference Include="..\BoundedContexts\Authentication\Authentication.Application\Authentication.Application.csproj" />
       <ProjectReference Include="..\BoundedContexts\Authentication\Authentication.Persistence\Authentication.Persistence.csproj" />
+      <ProjectReference Include="..\BoundedContexts\Laboratory\Laboratory.Application\Laboratory.Application.csproj" />
+      <ProjectReference Include="..\BoundedContexts\Laboratory\Laboratory.Persistence\Laboratory.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

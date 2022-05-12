@@ -1,8 +1,11 @@
-import { Form, DatePicker, Button, Input } from 'antd';
+import { Form, DatePicker, Button, Input, notification } from 'antd';
 import ClientAutoComplete from '../../../components/ClientAutoComplete';
 import moment from 'moment';
 import { getLoggedInUser } from '../../../api/userActions';
 import ConcreteTrialTable from '../../../components/ConcreteTrialTable';
+import { createConcreteCubeTest } from '../../../api/concreteCubeTestActions';
+import { testTypes } from '../../../api/constants/testTypes';
+import { concreteTypes } from '../../../api/constants/concreteTypes';
 
 const calculateAverageStrength = (data) => {
     const strengths = data.map(x => Number(x.strength));
@@ -15,7 +18,7 @@ const calculateAverageStrength = (data) => {
 const calculateStandardDeviation = (data, averageStrength) => {
     const strengths = data.map(x => Number(x.strength));
     let sq = strengths.reduce((sum, strength) => sum + ((strength - averageStrength) * (strength - averageStrength)));
-    sq = sq / (data.length - 1); // todo: if 1 test, this will divide by 0?????
+    sq = sq / (data.length /*- 1*/); // todo: if 1 test, this will divide by 0?????
 
     const s = Math.sqrt(sq);
     return s;
@@ -28,6 +31,46 @@ const ConcreteTrial = () => {
         console.log(standardDeviation);
 
         console.log('Success:', values);
+        const postObject = {
+            clientCompanyId: '543c1d38-5f3d-473f-b73b-87f9bcc02041', // select from available companies
+            employeeCompanyId: '543c1d38-5f3d-473f-b73b-87f9bcc02042', // select current employee company
+            testExecutionDate: values.testExecutionDate,
+            testSamplesReceivedDate: values.testSamplesReceivedDate,
+            testSamplesReceivedBy: 'Vykdytojas', // ['Uzsakovas', 'Uzsakovo igaliotas atstovas', 'Vykdytojas']
+            testSamplesReceivedComment: 'Bandiniai atvezti yara yara from .tex', // move to input field
+            testSamplesReceivedCount: 6, // from input
+            testExecutedByUserId: '543c1d38-5f3d-473f-b73b-87f9bcc02043', // get from localhost
+            protocolCreatedByUserId: '543c1d38-5f3d-473f-b73b-87f9bcc02043', // get from localhost
+            testType: testTypes.INITIAL, // from dropdown select
+            concreteType: concreteTypes.LIGHT, // from dropdown select
+            acceptedSampleCount: 3, // based on testType selection
+            rejectedSampleCount: 3, // input
+            averageCrushForce: averageStrength,
+            standardUncertainty: 1, //ask Zabulionis
+            extendedUncertainty: 1, //ask Zabulionis
+            standardDeviation: standardDeviation,
+            characteristicStrength: 3, //calculation present but ask Zabulionis which one to use
+            concreteRating: 'C30/30', // explanation in .tex
+            testData: values.testData.map(x => {
+                return {
+                    comment: x.comment,
+                    destructivePower: x.destructivePower,
+                    crushingStrength: x.strength,
+                    valueA: x.valueA.values,
+                    valueB: x.valueB.values
+                }
+            })
+        };
+
+        createConcreteCubeTest(postObject)
+            .then(response => {
+                if (response.isOk) {
+                    notification.success({
+                        message: 'Sėkmė!',
+                        description: 'Bandymas atliktas sėkmingai'
+                    });
+                }
+            });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -55,7 +98,7 @@ const ConcreteTrial = () => {
 
             <Form.Item
                 label='Bandinių gavimo/pristatymo data'
-                name='sampleArrivalDate'
+                name='testSamplesReceivedDate'
                 rules={[{ required: true, message: 'Pasirinkite bandinių gavimo datą' }]}
             >
                 <DatePicker showTime />
@@ -63,7 +106,7 @@ const ConcreteTrial = () => {
 
             <Form.Item
                 label='Bandymo data'
-                name='testDate'
+                name='testExecutionDate'
                 initialValue={moment()}
                 rules={[{ required: true, message: 'Pasirinkite bandymo atlikimo datą' }]}
             >

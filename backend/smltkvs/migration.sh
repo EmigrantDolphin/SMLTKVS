@@ -5,6 +5,7 @@ updateCommand=update
 removeCommand=remove
 
 authContext=authentication
+labContext=laboratoryContext
 
 context=$1
 myCommand=$2
@@ -14,7 +15,7 @@ if [ -z "$1" ]
 then
   echo ___HELP___
   echo "./migration.sh <context> <command> [name]"
-  echo contexts: $authContext
+  echo contexts: $authContext, $labContext
   echo commands: $addCommand, $updateCommand, $removeCommand
   exit 0
 fi
@@ -24,7 +25,12 @@ if [ $myCommand == $addCommand ]
 then
   if [ $context == $authContext ]
   then
-    dotnet ef migrations add $name --startup-project WebApi/ --project BoundedContexts/Authentication/Authentication.Persistence --context authenticationContext
+    dotnet ef migrations add $name --startup-project WebApi/ --project BoundedContexts/Authentication/Authentication.Persistence --context $authContext
+    exit 0
+  fi
+  if [ $context == $labContext ]
+  then
+    dotnet ef migrations add $name --startup-project WebApi/ --project BoundedContexts/Laboratory/Laboratory.Persistence --context $labContext
     exit 0
   fi
 fi
@@ -34,7 +40,12 @@ if [ $myCommand == $removeCommand ]
 then
   if [ $context == $authContext ]
   then
-    dotnet ef migrations remove --startup-project WebApi/ --project BoundedContexts/Authentication/Authentication.Persistence --context authenticationContext
+    dotnet ef migrations remove --startup-project WebApi/ --project BoundedContexts/Authentication/Authentication.Persistence --context $authContext
+    exit 0
+  fi
+  if [ $context == $labContext ]
+  then
+    dotnet ef migrations remove --startup-project WebApi/ --project BoundedContexts/Laboratory/Laboratory.Persistence --context $labContext
     exit 0
   fi
 fi
@@ -44,7 +55,12 @@ if [ $myCommand == $updateCommand ]
 then
   if [ $context == $authContext ]
   then
-    dotnet ef database update --startup-project WebApi/ --project BoundedContexts/Authentication/Authentication.Persistence --context authenticationContext
+    dotnet ef database update --startup-project WebApi/ --project BoundedContexts/Authentication/Authentication.Persistence --context $authContext
+    exit 0
+  fi
+  if [ $context == $labContext ]
+  then
+    dotnet ef database update --startup-project WebApi/ --project BoundedContexts/Laboratory/Laboratory.Persistence --context $labContext
     exit 0
   fi
 fi

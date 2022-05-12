@@ -4,5 +4,6 @@ public enum Role
 {
     Admin = 0,
     Employee = 1,
-    Client = 2
+    Client = 2,
+    ClientAdmin = 3
 }
