@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Form, DatePicker, Button, Input, notification } from 'antd';
 import ClientAutoComplete from '../../../components/ClientAutoComplete';
 import moment from 'moment';
@@ -25,6 +26,8 @@ const calculateStandardDeviation = (data, averageStrength) => {
 }
 
 const ConcreteTrial = () => {
+    const [isSendingRequest, setIsSendingRequest] = useState(false);
+
     const onFinish = (values) => {
         const averageStrength = calculateAverageStrength(values.testData);
         const standardDeviation = calculateStandardDeviation(values.testData, averageStrength);
@@ -61,9 +64,11 @@ const ConcreteTrial = () => {
                 }
             })
         };
-
+        
+        setIsSendingRequest(true);
         createConcreteCubeTest(postObject)
             .then(response => {
+                setIsSendingRequest(false);
                 if (response.isOk) {
                     notification.success({
                         message: 'Sėkmė!',
@@ -133,7 +138,11 @@ const ConcreteTrial = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 10, span: 4 }}>
-                <Button type='primary' htmlType='submit'>
+                <Button
+                    type='primary'
+                    htmlType='submit'
+                    loading={isSendingRequest}
+                >
                     Submit
                 </Button>
             </Form.Item>
