@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Button, Form, Input, notification } from 'antd';
-import { registerUser } from '../api/userActions';
-import { getUsers } from '../api/userActions';
-import { roles } from '../api/constants/roles';
+import { registerUser } from '../../api/userActions';
+import { getUsers } from '../../api/userActions';
+import { roles } from '../../api/constants/roles';
 
 
 const AddClientModal = () => {
@@ -73,7 +73,6 @@ const AddClientModal = () => {
                 form={form}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                initialValues={{ remember: true }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"

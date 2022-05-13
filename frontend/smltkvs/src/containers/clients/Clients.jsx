@@ -2,7 +2,7 @@ import { Table } from 'antd';
 import AddClientModal from './AddClientModal';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../api/userActions';
+import { getUsers } from '../../api/userActions';
 
 const columns = [
   {
@@ -22,10 +22,6 @@ const columns = [
   },
 ];
 
-function onChange(pagination, filters, sorter, extra) {
-  console.log('params', pagination, filters, sorter, extra);
-}
-
 const getUserColumnData = (users) => {
   if (!users) return [];
 
@@ -41,17 +37,17 @@ const getUserColumnData = (users) => {
 
 const Clients = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => {console.log(state); return state.users.value});
+  const users = useSelector((state) => state.users.value);
 
   useEffect(() => {
     getUsers(dispatch);
   }, [dispatch]);
 
   return (
-      <>
-          <AddClientModal />
-          <Table columns={columns} dataSource={getUserColumnData(users)} onChange={onChange} />
-      </>
+    <>
+        <AddClientModal />
+        <Table columns={columns} dataSource={getUserColumnData(users)} />
+    </>
   );
 }
 

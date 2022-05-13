@@ -28,9 +28,9 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, OneOf<S
             return new BadRequest("Neteisingas prisijungimo vardas arba slaptažodis");
         }
 
-        var newTokenResponse = await _mediator.Send(new GenerateTokenCommand(user.UserId, user.Username, user.Role), cancellationToken);
+        var newTokenResponse = await _mediator.Send(new GenerateTokenCommand(user.UserId, user.CompanyId, user.Username, user.Role), cancellationToken);
 
-        return new Success<LoggedInUserDto>(new LoggedInUserDto(user.UserId, user.Username, newTokenResponse.Token));
+        return new Success<LoggedInUserDto>(new LoggedInUserDto(user.UserId, user.CompanyId, user.Username, newTokenResponse.Token));
     }
 
     private async Task<User?> GetUser(string username, string password) =>

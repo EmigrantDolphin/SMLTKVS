@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Profile from './components/Profile';
 import Login from './containers/Login';
 import MainMenu from './containers/MainMenu';
-import ConcreteTrial from './containers/StandardTrials/Concrete/ConcreteTrial';
+import ConcreteTrial from './containers/concreteTests/ConcreteTrial';
 import { routes } from './routes';
 
 function App() {

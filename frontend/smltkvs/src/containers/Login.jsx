@@ -18,10 +18,6 @@ const Login = () => {
             });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
     return (
         <Form
             style={{marginTop:100}}
@@ -30,7 +26,6 @@ const Login = () => {
             wrapperCol={{ span: 4 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
             <Form.Item

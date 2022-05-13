@@ -11,6 +11,7 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(u => u.UserId);
         builder.Property(u => u.UserId).ValueGeneratedNever();
+        builder.Property(u => u.CompanyId).IsRequired();
         builder.Property(u => u.Username).HasMaxLength(50).IsRequired();
         builder.Property(u => u.Password).HasMaxLength(256).IsRequired();
         builder.Property(u => u.Email).HasMaxLength(256).IsRequired(false);

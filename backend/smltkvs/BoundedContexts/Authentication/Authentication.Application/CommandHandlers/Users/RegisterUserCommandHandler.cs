@@ -26,7 +26,7 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, O
             return new BadRequest("Username already exists");
         }
         
-        var user = new User(request.Username, request.Password, Role.Client, request.Email, request.Name);
+        var user = new User(request.CompanyId, request.Username, request.Password, request.Role, request.Email, request.Name);
 
         _context.Users.Add(user);
         await _context.SaveChangesAsync();

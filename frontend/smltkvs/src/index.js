@@ -6,11 +6,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux';
 import userReducer from './reducers/user';
 import usersReducer from './reducers/users';
+import companiesReducer from './reducers/companies';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    users: usersReducer
+    users: usersReducer,
+    companies: companiesReducer
   }
 })
 

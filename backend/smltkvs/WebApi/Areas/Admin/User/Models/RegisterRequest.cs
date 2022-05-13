@@ -8,4 +8,10 @@ public enum Role
     Employee = 1,
     Client = 2
 }
-public record RegisterRequest([Required] string Username, [Required] string Password, [Required] Role Role, string? Email, string? Name);
+public record RegisterRequest(
+    [Required] Guid CompanyId,
+    [Required] string Username,
+    [Required] string Password,
+    [Required] Role Role,
+    string? Email,
+    string? Name);

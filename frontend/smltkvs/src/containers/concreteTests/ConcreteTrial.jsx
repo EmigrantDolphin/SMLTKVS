@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Form, DatePicker, Button, Input, notification } from 'antd';
-import ClientAutoComplete from '../../../components/ClientAutoComplete';
+import ClientAutoComplete from '../../components/ClientAutoComplete';
 import moment from 'moment';
-import { getLoggedInUser } from '../../../api/userActions';
-import ConcreteTrialTable from '../../../components/ConcreteTrialTable';
-import { createConcreteCubeTest } from '../../../api/concreteCubeTestActions';
-import { testTypes } from '../../../api/constants/testTypes';
-import { concreteTypes } from '../../../api/constants/concreteTypes';
+import { getLoggedInUser } from '../../api/userActions';
+import ConcreteTrialTable from '../../components/ConcreteTrialTable';
+import { createConcreteCubeTest } from '../../api/concreteCubeTestActions';
+import { testTypes } from '../../api/constants/testTypes';
+import { concreteTypes } from '../../api/constants/concreteTypes';
 
 const calculateAverageStrength = (data) => {
     const strengths = data.map(x => Number(x.strength));

@@ -26,7 +26,8 @@ public class GenerateTokenCommandHandler : IRequestHandler<GenerateTokenCommand,
         {
             new Claim(ClaimTypes.Name, command.Username),
             new Claim(ClaimTypes.Role, command.Role.ToString()),
-            new Claim("UserId", value: command.UserId.ToString())
+            new Claim("UserId", value: command.UserId.ToString()),
+            new Claim("CompanyId", value: command.CompanyId.ToString())
         };
 
         var newToken = GenerateAccessToken(claims, DateTime.Now);

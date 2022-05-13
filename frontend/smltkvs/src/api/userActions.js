@@ -20,7 +20,6 @@ export const loginUser = async (username, password) => {
 
 export const getLoggedInUser = () => {
     var auth = localStorage.getItem(localStorageKeys.authToken);
-    console.log(auth);
     if (!auth)
         logoutUser();
 

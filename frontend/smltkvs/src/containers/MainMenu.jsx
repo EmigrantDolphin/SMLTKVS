@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
-import ConcreteList from './StandardLists/ConcreteList';
-import Clients from './Clients';
+import ConcreteList from './concreteTests/ConcreteList';
+import Clients from './clients/Clients';
+import Companies from './companies/Companies';
 
 function getItem(label, key, icon, children, type) {
   return { key, icon, children, label, type };
 }
 
-const concreteKey = 'concrete';
-const employeesKey = 'somethingElse'
-const clientsKey = 'clientsElse'
+const concreteKey = 'concreteKey';
+const employeesKey = 'employeesKey';
+const clientsKey = 'clientsKey';
+const companiesKey = 'companiesKey'
 const items = [
   getItem('Betonas ir gelžbetonis', concreteKey, <MailOutlined />),
   getItem('Darbuotojai', employeesKey, <AppstoreOutlined />),
-  getItem('Klientai', clientsKey, <AppstoreOutlined />)
+  getItem('Klientai', clientsKey, <AppstoreOutlined />),
+  getItem('Įmonės', companiesKey, <AppstoreOutlined />)
 ];
 
 const MainMenu = () => {
@@ -50,6 +53,7 @@ const MainMenu = () => {
         >
             {selectedItem === concreteKey && <ConcreteList />}
             {selectedItem === clientsKey && <Clients />}
+            {selectedItem === companiesKey && <Companies />}
         </div>
     </div>
   );

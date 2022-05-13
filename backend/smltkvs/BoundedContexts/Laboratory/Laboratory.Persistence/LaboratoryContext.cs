@@ -7,6 +7,7 @@ namespace Laboratory.Persistence;
 public class LaboratoryContext : DbContext, ILaboratoryContext
 {
     public DbSet<ConcreteCubeStrengthTest> ConcreteCubeStrengthTests { get; set; }
+    public DbSet<Company> Companies { get; set; }
     
     public LaboratoryContext(DbContextOptions<LaboratoryContext> options): base(options)
     {
@@ -18,6 +19,8 @@ public class LaboratoryContext : DbContext, ILaboratoryContext
         modelBuilder.ApplyConfiguration(new ConcreteCubeStrengthTestEntityConfiguration());
         modelBuilder.ApplyConfiguration(new ConcreteCubeStrengthTestDataEntityConfiguration());
         modelBuilder.ApplyConfiguration(new CrossSectionalDimensionsEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new CompanyEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ConstructionSiteEntityConfiguration());
     }
 
     public async Task<int> SaveChangesAsync() =>

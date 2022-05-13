@@ -5,5 +5,5 @@ using MediatR;
 
 namespace Authentication.Application.Commands.Users;
 
-public record RegisterUserCommand(string Username, string Password, string Email, string Name, Role Role)
+public record RegisterUserCommand(Guid CompanyId, string Username, string Password, string Email, string Name, Role Role)
     :IRequest<OneOf<Success, BadRequest>>;

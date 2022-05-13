@@ -22,6 +22,13 @@ export const requestApi = async (api, data = undefined, requestMethod = restMeth
         }
     });
 
+    if (response.status === 200) {
+        return {
+            isOk: true,
+            response: response
+        }
+    }
+
     if (response.status === 400) {
         var text = await response.text();
         notification.error({
@@ -39,7 +46,6 @@ export const requestApi = async (api, data = undefined, requestMethod = restMeth
     }
 
     return {
-        isOk: true,
-        response: response
+        isOk: false
     }
 }

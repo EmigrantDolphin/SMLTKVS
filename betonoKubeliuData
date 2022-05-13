@@ -49,4 +49,9 @@ Company: {
 	imones kodas: 3735025353
 }
 
+CompanyObjects: {
+	name: 'some name',
+	address: 'some address'
+}
+
 User: {companyId: nullable guid}
