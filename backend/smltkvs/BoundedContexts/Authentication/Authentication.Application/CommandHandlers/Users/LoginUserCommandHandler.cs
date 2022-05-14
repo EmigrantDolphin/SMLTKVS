@@ -30,7 +30,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, OneOf<S
 
         var newTokenResponse = await _mediator.Send(new GenerateTokenCommand(user.UserId, user.CompanyId, user.Username, user.Role), cancellationToken);
 
-        return new Success<LoggedInUserDto>(new LoggedInUserDto(user.UserId, user.CompanyId, user.Username, newTokenResponse.Token));
+        return new Success<LoggedInUserDto>(new LoggedInUserDto(user.UserId, user.CompanyId, user.Username, newTokenResponse.Token, user.Role));
     }
 
     private async Task<User?> GetUser(string username, string password) =>

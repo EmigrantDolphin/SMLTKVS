@@ -1,17 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Areas.Admin.User.Models;
+namespace WebApi.Areas.SharedModels;
 
-public enum Role
-{
-    Admin = 0,
-    Employee = 1,
-    Client = 2
-}
 public record RegisterRequest(
     [Required] Guid CompanyId,
     [Required] string Username,
     [Required] string Password,
-    [Required] Role Role,
+    [Required] Roles Role,
     string? Email,
     string? Name);

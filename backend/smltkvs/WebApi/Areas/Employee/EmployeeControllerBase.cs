@@ -6,4 +6,4 @@ namespace WebApi.Areas.Employee;
 [ApiController]
 [Authorize(Roles = "Admin, Employee")]
 [ApiExplorerSettings(GroupName = ApiAreas.Employee)]
-public abstract class EmployeeControllerBase : ControllerBase { }
+public abstract class EmployeeControllerBase : BaseController { }

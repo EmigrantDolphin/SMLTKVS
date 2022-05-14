@@ -1,7 +1,15 @@
 export const apiPaths = {
-    postRegisterUser: '/auth/user',
+    postRegisterUser: {
+        admin: '/admin/user',
+        clientAdmin: '/client-admin/user'
+    },
     postLogin: '/auth/user/login',
-    getUsers: '/auth/users',
+    getUsers: {
+        admin: '/admin/users',
+        employee: '/employee/users',
+        client: '/client/users',
+        clientAdmin: '/client-admin/users'
+    },
     postConcreteCubeTest: '/concrete/cube/test',
     postCompany: '/company',
     getCompanies: '/companies',

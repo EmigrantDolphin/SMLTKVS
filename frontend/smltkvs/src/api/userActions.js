@@ -3,6 +3,7 @@ import { requestApi, restMethod } from "./requestApi";
 import { setUsers } from "../reducers/users";
 import { localStorageKeys } from "./constants/localStorageKeys";
 import { routes } from "../routes";
+import { roles } from "./constants/roles";
 
 export const loginUser = async (username, password) => {
     var result = await requestApi(apiPaths.postLogin, {
@@ -32,7 +33,15 @@ export const logoutUser = () => {
 };
 
 export const registerUser = async (username, password, role, email, name) => {
-    return requestApi(apiPaths.postRegisterUser, {
+    const loggedInUserRole = getLoggedInUser().role;
+
+    let apiPath = '';
+    if (loggedInUserRole === roles.admin)
+        apiPath = apiPaths.postRegisterUser.admin
+    if (loggedInUserRole === roles.clientAdmin)
+        apiPath = apiPaths.postRegisterUser.clientAdmin
+
+    return requestApi(apiPath, {
         username,
         password,
         role,
@@ -42,7 +51,21 @@ export const registerUser = async (username, password, role, email, name) => {
 };
 
 export const getUsers = async (dispatch) => {
-    var result = await requestApi(apiPaths.getUsers);
+    const loggedInUserRole = getLoggedInUser().role;
+console.log(getLoggedInUser());
+console.log(loggedInUserRole);
+
+    let apiPath = '';
+    if (loggedInUserRole === roles.admin)
+        apiPath = apiPaths.getUsers.admin
+    if (loggedInUserRole === roles.clientAdmin)
+        apiPath = apiPaths.getUsers.clientAdmin
+    if (loggedInUserRole === roles.client)
+        apiPath = apiPaths.getUsers.client
+    if (loggedInUserRole === roles.employee)
+        apiPath = apiPaths.getUsers.employee
+
+    var result = await requestApi(apiPath);
     if (!result.isOk) return;
     var json = await result.response.json();
     dispatch(setUsers(json));

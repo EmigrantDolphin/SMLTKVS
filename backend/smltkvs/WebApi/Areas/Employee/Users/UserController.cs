@@ -7,9 +7,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Areas.SharedModels;
 
-namespace WebApi.Areas.Admin.User.Controllers;
+namespace WebApi.Areas.Employee.Users;
 
-public class UserController : AdminControllerBase
+public class UserController : EmployeeControllerBase
 {
     private readonly IMediator _mediatr;
     private readonly IGetUsers _getUsers;
@@ -20,13 +20,19 @@ public class UserController : AdminControllerBase
         _getUsers = getUsers;
     }
 
-    [HttpPost("api/admin/user")]
+    [HttpPost("api/employee/user")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RegisterUser([FromBody] RegisterRequest request)
     {
         try
         {
+            var allowedRoles = new List<Roles> { Roles.Client, Roles.ClientAdmin };
+            if (!allowedRoles.Contains(request.Role))
+            {
+                return BadRequest("Darbuotojas gali kurti tik administratorius klientus ir klientus.");
+            }
+            
             var commandResponse = await _mediatr.Send(request.Adapt<RegisterUserCommand>());
 
             if (commandResponse.IsSuccess())
@@ -41,8 +47,8 @@ public class UserController : AdminControllerBase
             return BadRequest(e.Message);
         }
     }
-    
-    [HttpGet("api/admin/users")]
+
+    [HttpGet("api/employee/users")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetUsers([FromQuery] Roles? role)

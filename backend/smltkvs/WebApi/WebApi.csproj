@@ -27,4 +27,9 @@
       <ProjectReference Include="..\BoundedContexts\Laboratory\Laboratory.Persistence\Laboratory.Persistence.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Areas\Admin\User\Models" />
+      <Folder Include="Areas\ClientAdmin" />
+    </ItemGroup>
+
 </Project>

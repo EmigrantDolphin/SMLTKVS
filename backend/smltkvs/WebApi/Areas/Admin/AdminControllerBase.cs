@@ -6,4 +6,4 @@ namespace WebApi.Areas.Admin;
 [ApiController]
 [Authorize(Roles = "Admin")]
 [ApiExplorerSettings(GroupName = ApiAreas.Admin)]
-public abstract class AdminControllerBase : ControllerBase { }
+public abstract class AdminControllerBase : BaseController { }

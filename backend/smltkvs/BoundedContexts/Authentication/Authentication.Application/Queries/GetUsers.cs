@@ -15,13 +15,19 @@ public class GetUsers : IGetUsers
         _context = context;
     }
 
-    public async Task<IList<User>> ExecuteAsync(Role? role)
+    public async Task<IList<User>> ExecuteAsync(Role? role, Guid? companyId)
     {
+        var usersQuery = _context.Users.AsQueryable();
         if (role.HasValue)
         {
-            return await _context.Users.Where(x => x.Role == role).ToListAsync();
+            usersQuery = usersQuery.Where(x => x.Role == role);
         }
 
-        return await _context.Users.ToListAsync();
+        if (companyId.HasValue)
+        {
+            usersQuery = usersQuery.Where(x => x.CompanyId == companyId);
+        }
+
+        return await usersQuery.ToListAsync();
     }
 }
