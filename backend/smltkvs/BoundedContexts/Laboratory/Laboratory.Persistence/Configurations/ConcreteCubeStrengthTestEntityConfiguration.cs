@@ -14,10 +14,11 @@ public class ConcreteCubeStrengthTestEntityConfiguration : IEntityTypeConfigurat
         builder.Property(u => u.ConcreteCubeStrengthTestId).ValueGeneratedNever();
         builder.Property(u => u.TestProtocolNumber).HasMaxLength(50).IsRequired();
         builder.Property(u => u.ClientCompanyId).IsRequired();
+        builder.Property(u => u.ClientConstructionSiteId).IsRequired();
         builder.Property(u => u.EmployeeCompanyId).IsRequired();
         builder.Property(u => u.TestExecutionDate).IsRequired();
         builder.Property(u => u.TestSamplesReceivedDate).IsRequired();
-        builder.Property(u => u.TestSamplesReceivedBy).HasMaxLength(256).IsRequired();
+        builder.Property(u => u.TestSamplesDeliveredBy).HasMaxLength(256).IsRequired();
         builder.Property(u => u.TestSamplesReceivedComment).HasMaxLength(2000).IsRequired();
         builder.Property(u => u.TestSamplesReceivedCount).IsRequired();
         builder.Property(u => u.TestExecutedByUserId).IsRequired();

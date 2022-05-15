@@ -3,7 +3,7 @@ import { Modal, Form, Input, notification, Button } from 'antd';
 import { createCompany } from '../../api/companyActions';
 
 
-const AddCompanyModal = () => {
+const AddCompanyModal = ({onSuccess}) => {
     const [form] = Form.useForm();
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -22,6 +22,8 @@ const AddCompanyModal = () => {
                         message: 'Sėkmė!',
                         description: 'Įmonė išsaugota sėkmingai'
                     });
+                    setVisible(false);
+                    onSuccess();
                 }
                 setConfirmLoading(false);
             })

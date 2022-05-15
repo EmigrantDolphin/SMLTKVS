@@ -8,13 +8,15 @@ public class ConcreteCubeTestRequest
     [Required]
     public Guid ClientCompanyId { get; set; }
     [Required]
+    public Guid ClientConstructionSiteId { get; set; }
+    [Required]
     public Guid EmployeeCompanyId { get; set; }
     [Required]
     public DateTimeOffset TestExecutionDate { get; set; }
     [Required]
     public DateTimeOffset TestSamplesReceivedDate { get; set; }
     [Required]
-    public string TestSamplesReceivedBy { get; set; }
+    public string TestSamplesDeliveredBy { get; set; }
     [Required]
     public string TestSamplesReceivedComment { get; set; }
     [Required]

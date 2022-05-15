@@ -1,3 +1,3 @@
 namespace WebApi.Areas.SharedModels;
 
-public record UserResponse(Guid UserId, string Username, string Name, string Email, Roles Role);
+public record UserResponse(Guid UserId, Guid CompanyId, string Username, string Name, string Email, Roles Role);

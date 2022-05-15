@@ -5,6 +5,6 @@ public record GetCompaniesResponse(
     string Name,
     string Address,
     string CompanyCode,
-    List<ConstructionSiteRequest>? ConstructionSites);
+    List<ConstructionSiteResponse>? ConstructionSites);
 
 public record ConstructionSiteResponse(Guid ConstructionSiteId, string Name, string Address);

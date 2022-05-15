@@ -32,12 +32,14 @@ export const logoutUser = () => {
     window.location.href = routes.login;
 };
 
-export const registerUser = async (username, password, role, email, name) => {
+export const registerUser = async (username, password, role, companyId, email, name) => {
     const loggedInUserRole = getLoggedInUser().role;
 
     let apiPath = '';
     if (loggedInUserRole === roles.admin)
         apiPath = apiPaths.postRegisterUser.admin
+    if (loggedInUserRole === roles.employee)
+        apiPath = apiPaths.postRegisterUser.employee
     if (loggedInUserRole === roles.clientAdmin)
         apiPath = apiPaths.postRegisterUser.clientAdmin
 
@@ -45,25 +47,27 @@ export const registerUser = async (username, password, role, email, name) => {
         username,
         password,
         role,
+        companyId,
         email,
         name
     }, restMethod.POST);
 };
 
-export const getUsers = async (dispatch) => {
+export const getUsers = async (dispatch, selectedRole = null) => {
     const loggedInUserRole = getLoggedInUser().role;
-console.log(getLoggedInUser());
-console.log(loggedInUserRole);
 
     let apiPath = '';
     if (loggedInUserRole === roles.admin)
         apiPath = apiPaths.getUsers.admin
     if (loggedInUserRole === roles.clientAdmin)
-        apiPath = apiPaths.getUsers.clientAdmin
+        apiPath = apiPaths.getUsers.client;
     if (loggedInUserRole === roles.client)
-        apiPath = apiPaths.getUsers.client
+        apiPath = apiPaths.getUsers.client;
     if (loggedInUserRole === roles.employee)
-        apiPath = apiPaths.getUsers.employee
+        apiPath = apiPaths.getUsers.employee;
+
+    if (selectedRole !== null) 
+        apiPath = apiPath + `?role=${selectedRole}`;
 
     var result = await requestApi(apiPath);
     if (!result.isOk) return;

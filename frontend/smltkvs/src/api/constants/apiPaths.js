@@ -1,6 +1,7 @@
 export const apiPaths = {
     postRegisterUser: {
         admin: '/admin/user',
+        employee: '/employee/user',
         clientAdmin: '/client-admin/user'
     },
     postLogin: '/auth/user/login',

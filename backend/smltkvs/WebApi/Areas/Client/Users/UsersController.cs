@@ -23,7 +23,7 @@ public class UsersController : ClientControllerBase
             try
             {
                 var allowedRoles = new List<Roles> { Roles.Client, Roles.ClientAdmin };
-                if (role.HasValue && allowedRoles.Contains(role.Value))
+                if (role.HasValue && !allowedRoles.Contains(role.Value))
                 {
                     return BadRequest("Galite peržiūrėti tik klientus ir klientus administratorius");
                 }

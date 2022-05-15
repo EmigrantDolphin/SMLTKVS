@@ -2,30 +2,45 @@ import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
 import ConcreteList from './concreteTests/ConcreteList';
-import Clients from './clients/Clients';
+import Users from './users/Users';
 import Companies from './companies/Companies';
+import { getLoggedInUser, logoutUser } from '../api/userActions';
+import { roles } from '../api/constants/roles';
+import { useEffect } from 'react';
 
 function getItem(label, key, icon, children, type) {
   return { key, icon, children, label, type };
 }
 
 const concreteKey = 'concreteKey';
-const employeesKey = 'employeesKey';
-const clientsKey = 'clientsKey';
+const usersKey = 'usersKey';
 const companiesKey = 'companiesKey'
-const items = [
-  getItem('Betonas ir gelžbetonis', concreteKey, <MailOutlined />),
-  getItem('Darbuotojai', employeesKey, <AppstoreOutlined />),
-  getItem('Klientai', clientsKey, <AppstoreOutlined />),
-  getItem('Įmonės', companiesKey, <AppstoreOutlined />)
-];
+const logoutKey = 'logoutKey';
 
 const MainMenu = () => {
-    const [selectedItem, setSelectedItem] = useState(concreteKey);
+  const currentUserRole = getLoggedInUser().role;
+  const [selectedItem, setSelectedItem] = useState(concreteKey);
+
+  const items = [
+    getItem('Betonas ir gelžbetonis', concreteKey, <MailOutlined />),
+    getItem('Naudotojai', usersKey, <AppstoreOutlined />)
+  ];
+
+  if (currentUserRole === roles.admin || currentUserRole === roles.employee) {
+    items.push(getItem('Įmonės', companiesKey, <AppstoreOutlined />));
+  }
+
+  items.push(getItem('Atsijungti', logoutKey, <AppstoreOutlined />));
 
   const onClick = (e) => {
     setSelectedItem(e.key);
   };
+
+  useEffect(() => {
+    if (selectedItem === logoutKey) {
+      logoutUser();
+    }
+  }, [selectedItem]);
 
   return (
     <div
@@ -52,7 +67,7 @@ const MainMenu = () => {
             }}
         >
             {selectedItem === concreteKey && <ConcreteList />}
-            {selectedItem === clientsKey && <Clients />}
+            {selectedItem === usersKey && <Users />}
             {selectedItem === companiesKey && <Companies />}
         </div>
     </div>

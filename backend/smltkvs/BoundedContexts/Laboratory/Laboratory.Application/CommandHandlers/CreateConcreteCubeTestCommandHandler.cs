@@ -31,10 +31,11 @@ public class CreateConcreteCubeTestCommandHandler : IRequestHandler<CreateConcre
         var concreteCubeStrengthTest = new ConcreteCubeStrengthTest(
             "protocolNumber",
             request.ClientCompanyId,
+            request.ClientConstructionSiteId,
             request.EmployeeCompanyId,
             request.TestExecutionDate,
             request.TestSamplesReceivedDate,
-            request.TestSamplesReceivedBy,
+            request.TestSamplesDeliveredBy,
             request.TestSamplesReceivedComment,
             request.TestSamplesReceivedCount,
             request.TestExecutedByUserId,

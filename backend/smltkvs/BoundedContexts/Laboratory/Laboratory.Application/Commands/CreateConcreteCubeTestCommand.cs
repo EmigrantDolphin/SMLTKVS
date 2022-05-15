@@ -7,10 +7,11 @@ namespace Laboratory.Application.Commands;
 
 public record CreateConcreteCubeTestCommand(
         Guid ClientCompanyId,
+        Guid ClientConstructionSiteId,
         Guid EmployeeCompanyId,
         DateTimeOffset TestExecutionDate,
         DateTimeOffset TestSamplesReceivedDate,
-        string TestSamplesReceivedBy,
+        string TestSamplesDeliveredBy,
         string TestSamplesReceivedComment,
         int TestSamplesReceivedCount,
         Guid TestExecutedByUserId,

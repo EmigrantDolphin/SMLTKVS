@@ -59,7 +59,7 @@ const Companies = () => {
             title={
                 <>
                     Įmonės
-                    <AddCompanyModal />
+                    <AddCompanyModal onSuccess={() => getCompanies(dispatch)} />
                 </>
             }
         >

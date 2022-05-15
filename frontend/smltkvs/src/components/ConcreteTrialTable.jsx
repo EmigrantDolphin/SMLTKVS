@@ -1,8 +1,8 @@
 import React from 'react';
-import { Table, InputNumber, Button } from 'antd';
+import { Table, InputNumber } from 'antd';
 import { isArrayFilled } from '../utilities/isArrayFilled';
 
-const initialData = [{
+const initialData = {
     key: 0,
     testNumber: 0,
     valueA: {
@@ -15,7 +15,7 @@ const initialData = [{
     strength: null,
     comments: null,
     pictures: null
-}];
+};
 
 const calculateStrength = (newData, testIndex) => {
     const aValues = newData[testIndex].valueA.values;
@@ -40,12 +40,12 @@ const calculateStrength = (newData, testIndex) => {
     return newData;
 }
 
-const ConcreteTrialTable = ({ onChange, value }) => {
+const ConcreteTrialTable = ({ onChange, value, acceptedSampleCount }) => {
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
     const onValueAChange = (inputValue, testIndex, valueIndex) => {
-        let newData = value || initialData;
+        let newData = value || getInitialData(acceptedSampleCount);
 
         const valueAValues = [...newData[testIndex].valueA.values];
         valueAValues[valueIndex] = inputValue;
@@ -55,7 +55,7 @@ const ConcreteTrialTable = ({ onChange, value }) => {
     }
 
     const onValueBChange = (inputValue, testIndex, valueIndex) => {
-        let newData = value || initialData;;
+        let newData = value || getInitialData(acceptedSampleCount);
 
         const valueBValues = [...newData[testIndex].valueB.values];
         valueBValues[valueIndex] = inputValue;
@@ -65,7 +65,7 @@ const ConcreteTrialTable = ({ onChange, value }) => {
     }
 
     const onDestructivePowerChange = (inputValue, testIndex) => {
-        let newData = value || initialData;;
+        let newData = value || getInitialData(acceptedSampleCount);
         newData[testIndex] = {...newData[testIndex], destructivePower: inputValue};
         onDataChange(newData, testIndex);
     }
@@ -77,24 +77,12 @@ const ConcreteTrialTable = ({ onChange, value }) => {
         forceUpdate();
     }
 
-    const addTest = () => {
-        const data = value || initialData;
-
-        let newRow = {...initialData[0]};
-        newRow.key = data.length;
-        newRow.testNumber = data.length;
-
-        data.push(newRow);
-
-        onChange([...data]);
-        forceUpdate();
-    }
-
-    const removeTest = () => {
-        value.pop();
-
-        onChange([...value]);
-        forceUpdate();
+    const getInitialData = (count) => {
+        const initial = [];
+        for (let i = 0; i < count; i++) {
+            initial.push({...initialData, key: i, testNumber: i});
+        }
+        return initial;
     }
 
     const columns = [
@@ -188,28 +176,10 @@ const ConcreteTrialTable = ({ onChange, value }) => {
         <div style={{width: '700px'}}>
             <Table
                 columns={columns}
-                dataSource={value ? [...value] : initialData}
+                dataSource={value ? [...value] : getInitialData(acceptedSampleCount)}
                 bordered
                 pagination={false}
             />
-            <div style={{display: 'flex'}}>
-                <Button
-                    type='primary'
-                    style={{marginTop: '5px'}}
-                    onClick={() => addTest()}
-                >
-                    Pridėti bandinį
-                </Button>
-
-                {value && value.length > 1 && (
-                    <Button
-                        style={{marginTop: '5px', marginLeft: '20px'}}
-                        onClick={() => removeTest()}
-                    >
-                        Ištrinti bandinį
-                    </Button>
-                )}
-            </div>
         </div>
     );
 }

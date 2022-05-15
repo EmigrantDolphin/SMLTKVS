@@ -8,10 +8,11 @@ public class ConcreteCubeStrengthTest
     public Guid ConcreteCubeStrengthTestId { get; private set; }
     public string TestProtocolNumber { get; private set; }
     public Guid ClientCompanyId { get; private set; }
+    public Guid ClientConstructionSiteId { get; private set; }
     public Guid EmployeeCompanyId { get; private set; }
     public DateTimeOffset TestExecutionDate { get; private set; }
     public DateTimeOffset TestSamplesReceivedDate { get; private set; }
-    public string TestSamplesReceivedBy { get; private set; }
+    public string TestSamplesDeliveredBy { get; private set; }
     public string TestSamplesReceivedComment { get; private set; }
     public int TestSamplesReceivedCount { get; private set; }
     public Guid TestExecutedByUserId { get; private set; }
@@ -36,10 +37,11 @@ public class ConcreteCubeStrengthTest
     public ConcreteCubeStrengthTest(
         string testProtocolNumber,
         Guid clientCompanyId,
+        Guid clientConstructionSiteId,
         Guid employeeCompanyId,
         DateTimeOffset testExecutionDate,
         DateTimeOffset testSamplesReceivedDate,
-        string testSamplesReceivedBy,
+        string testSamplesDeliveredBy,
         string testSamplesReceivedComment,
         int testSamplesReceivedCount,
         Guid testExecutedByUserId,
@@ -60,10 +62,11 @@ public class ConcreteCubeStrengthTest
         ConcreteCubeStrengthTestId = Guid.NewGuid();
         TestProtocolNumber = testProtocolNumber;
         ClientCompanyId = clientCompanyId;
+        ClientConstructionSiteId = clientConstructionSiteId;
         EmployeeCompanyId = employeeCompanyId;
         TestExecutionDate = testExecutionDate;
         TestSamplesReceivedDate = testSamplesReceivedDate;
-        TestSamplesReceivedBy = testSamplesReceivedBy;
+        TestSamplesDeliveredBy = testSamplesDeliveredBy;
         TestSamplesReceivedComment = testSamplesReceivedComment;
         TestSamplesReceivedCount = testSamplesReceivedCount;
         TestExecutedByUserId = testExecutedByUserId;
