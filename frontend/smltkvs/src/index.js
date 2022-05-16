@@ -7,12 +7,16 @@ import { Provider } from 'react-redux';
 import userReducer from './reducers/user';
 import usersReducer from './reducers/users';
 import companiesReducer from './reducers/companies';
+import concreteCubeTestsReducer from './reducers/concreteCubeTests';
+import concreteCubeTestReducer from './reducers/concreteCubeTest';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     users: usersReducer,
-    companies: companiesReducer
+    companies: companiesReducer,
+    concreteCubeTests: concreteCubeTestsReducer,
+    concreteCubeTest: concreteCubeTestReducer
   }
 })
 

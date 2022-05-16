@@ -1,5 +1,6 @@
 export const routes = {
     home: '/',
-    concreteTrial: '/concreteTrial',
+    concreteCubeTrial: '/concrete-cube-trial',
+    concreteCubeTrialView: 'concrete-cube-trial-view',
     login: '/login'
 };

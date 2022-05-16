@@ -7,6 +7,8 @@ import ConcreteTrialTable from '../../components/ConcreteTrialTable';
 import { createConcreteCubeTest } from '../../api/concreteCubeTestActions';
 import { testTypes } from '../../api/constants/testTypes';
 import { concreteTypes } from '../../api/constants/concreteTypes';
+import { routes } from '../../routes';
+import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 
 const calculateAverageStrength = (data) => {
@@ -26,11 +28,12 @@ const calculateStandardDeviation = (data, averageStrength) => {
     return s;
 }
 
-const ConcreteTrial = () => {
+const ConcreteCubeTrial = () => {
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [acceptedSampleCount, setAcceptedSampleCount] = useState(1);
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [form] = Form.useForm();
+    const navigate = useNavigate();
     const currentUser = getLoggedInUser();
 
     const onFinish = (values) => {
@@ -81,6 +84,7 @@ const ConcreteTrial = () => {
                         message: 'Sėkmė!',
                         description: 'Bandymas atliktas sėkmingai'
                     });
+                    navigate(routes.home);
                 }
             });
     };
@@ -254,4 +258,4 @@ const ConcreteTrial = () => {
     );
 };
 
-export default ConcreteTrial;
+export default ConcreteCubeTrial;

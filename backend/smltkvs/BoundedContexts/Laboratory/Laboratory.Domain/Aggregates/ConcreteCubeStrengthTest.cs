@@ -8,6 +8,7 @@ public class ConcreteCubeStrengthTest
     public Guid ConcreteCubeStrengthTestId { get; private set; }
     public string TestProtocolNumber { get; private set; }
     public Guid ClientCompanyId { get; private set; }
+    public Company ClientCompany { get; private set; }
     public Guid ClientConstructionSiteId { get; private set; }
     public Guid EmployeeCompanyId { get; private set; }
     public DateTimeOffset TestExecutionDate { get; private set; }

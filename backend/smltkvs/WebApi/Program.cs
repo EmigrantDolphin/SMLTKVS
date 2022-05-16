@@ -3,6 +3,7 @@ using Authentication.Application.Options;
 using Authentication.Application.Queries;
 using Authentication.Application.Queries.Interfaces;
 using Authentication.Persistence;
+using Infrastructure.HttpClientFactories;
 using Laboratory.Application;
 using Laboratory.Persistence;
 using MediatR;
@@ -30,6 +31,7 @@ builder.Services.AddSingleton<JwtTokenConfiguration>();
 builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("JwtTokenOptions").Get<JwtTokenOptions>());
 
 builder.Services.AddScoped<IGetUsers, GetUsers>();
+builder.Services.AddHttpClient<ILatexCompilerService, LatexCompilerService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -11,7 +11,19 @@ export const apiPaths = {
         client: '/client/users',
         clientAdmin: '/client-admin/users'
     },
-    postConcreteCubeTest: '/concrete/cube/test',
+    postConcreteCubeTest: '/employee/concrete/cube/test',
+    getConcreteCubeTestList: {
+        employee:  '/employee/concrete/cube/tests',
+        client:  '/client/concrete/cube/tests'
+    },
+    getConcreteCubeTest: {
+        employee: '/employee/concrete/cube/tests/',
+        client: '/client/concrete/cube/tests/',
+    },
+    getConcreteCubeTestProtocol: {
+        employee: '/employee/concrete/cube/tests/{testId}/protocol',
+        client: '/client/concrete/cube/tests/{testId}/protocol'
+    },
     postCompany: '/company',
     getCompanies: '/companies',
     putCompany: '/company/' // :todo figure out a better way to add variables

@@ -30,4 +30,9 @@ public class GetUsers : IGetUsers
 
         return await usersQuery.ToListAsync();
     }
+
+    public async Task<List<User>> ExecuteAsync(Guid[] userIds) =>
+        await _context.Users
+            .Where(x => userIds.Contains(x.UserId))
+            .ToListAsync();
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using WebApi.Areas.SharedModels;
 
 namespace WebApi.Areas.Employee.ConcreteTests.Models;
 
@@ -60,16 +61,4 @@ public class ConcreteCubeStrengthTestData
     public decimal[] ValueA { get; set; }
     [Required]
     public decimal[] ValueB { get; set; }
-}
-
-public enum ConcreteType
-{
-    HeavyAndNormal = 0,
-    Light = 1
-}
-
-public enum TestType
-{
-    Initial = 0,
-    Permanent = 1
 }

@@ -119,7 +119,7 @@ const AddCompanyModal = ({onSuccess}) => {
 
                 <Button
                     onClick={() => setAddedConstructionSitesCount(addedConstructionSitesCount + 1)}
-                    style={{marginLeft: '5px'}}
+                    style={{marginLeft: '20px'}}
                 >
                     Pridėti objektą
                 </Button>

@@ -133,7 +133,7 @@ const EditCompanyModal = ({values, isVisible, onModalCancel}) => {
                     Pridėti objektą
                 </Button>
 
-                {addedConstructionSitesCount > 1 && (
+                {addedConstructionSitesCount > 0 && (
                     <Button
                         onClick={() => setAddedConstructionSitesCount(addedConstructionSitesCount - 1)}
                         style={{marginLeft: '5px'}}

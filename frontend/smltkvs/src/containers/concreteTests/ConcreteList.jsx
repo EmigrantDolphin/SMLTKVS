@@ -9,18 +9,10 @@ const ConcreteList = () => {
         <Card title="Betonas ir gelžbetonis">
             <Card
                 type="inner"
-                title="Standartas LST 2010"
-                extra={<NavigateButton text={selectButtonText} navigateUrl={routes.concreteTrial} />} // move to urls file
+                title="LST EN 12390-3"
+                extra={<NavigateButton text={selectButtonText} navigateUrl={routes.concreteCubeTrial} />}
             >
-            SStandarto trumpas aprašas ............Standarto trumpas aprašas ............Standarto trumpas aprašas ............tandarto trumpas aprašas ............
-            </Card>
-            <Card
-            style={{ marginTop: 16 }}
-            type="inner"
-            title="Standartas LST 2044"
-            extra={<NavigateButton text={selectButtonText} navigateUrl={routes.concreteTrial} />}
-            >
-            Standarto trumpas aprašymas.............
+                Betono kubelinio stiprio nustatymas pagal LST EN 12390-3
             </Card>
         </Card>
     )

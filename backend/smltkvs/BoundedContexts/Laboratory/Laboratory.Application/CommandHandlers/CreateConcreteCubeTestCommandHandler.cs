@@ -4,6 +4,7 @@ using Laboratory.Domain.Aggregates;
 using Laboratory.Domain.Entities.ConcreteCube;
 using Laboratory.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using OneOf;
 
 namespace Laboratory.Application.CommandHandlers;
@@ -28,8 +29,10 @@ public class CreateConcreteCubeTestCommandHandler : IRequestHandler<CreateConcre
             )
         ).ToList();
 
+        var count = await _context.ConcreteCubeStrengthTests.CountAsync(cancellationToken);
+
         var concreteCubeStrengthTest = new ConcreteCubeStrengthTest(
-            "protocolNumber",
+            $"Nr. {count}",
             request.ClientCompanyId,
             request.ClientConstructionSiteId,
             request.EmployeeCompanyId,

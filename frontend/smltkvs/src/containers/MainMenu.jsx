@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
-import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
+import { BorderOutlined, UserOutlined, LogoutOutlined, BankOutlined } from '@ant-design/icons';
 import ConcreteList from './concreteTests/ConcreteList';
+import ConcreteCubeTrialList from './concreteTests/ConcreteCubeTrialList';
 import Users from './users/Users';
 import Companies from './companies/Companies';
 import { getLoggedInUser, logoutUser } from '../api/userActions';
@@ -13,24 +14,33 @@ function getItem(label, key, icon, children, type) {
 }
 
 const concreteKey = 'concreteKey';
+const createConcreteTestKey = 'createConcreteTestKey';
+const viewConcreteTestsKey = 'viewConcreteTestsKey';
 const usersKey = 'usersKey';
 const companiesKey = 'companiesKey'
 const logoutKey = 'logoutKey';
 
 const MainMenu = () => {
   const currentUserRole = getLoggedInUser().role;
-  const [selectedItem, setSelectedItem] = useState(concreteKey);
+  const [selectedItem, setSelectedItem] = useState(viewConcreteTestsKey);
 
-  const items = [
-    getItem('Betonas ir gelžbetonis', concreteKey, <MailOutlined />),
-    getItem('Naudotojai', usersKey, <AppstoreOutlined />)
+  const concreteSubMenu = [];
+
+  if (currentUserRole === roles.admin || currentUserRole === roles.employee) {
+    concreteSubMenu.push(getItem('Sukurti', createConcreteTestKey));
+  }
+  concreteSubMenu.push(getItem('Kubelinio stiprio bandymai', viewConcreteTestsKey));
+
+  const mainMenuItems = [
+    getItem('Betonas ir gelžbetonis', concreteKey, <BorderOutlined />, concreteSubMenu),
+    getItem('Naudotojai', usersKey, <UserOutlined />)
   ];
 
   if (currentUserRole === roles.admin || currentUserRole === roles.employee) {
-    items.push(getItem('Įmonės', companiesKey, <AppstoreOutlined />));
+    mainMenuItems.push(getItem('Įmonės', companiesKey, <BankOutlined />));
   }
 
-  items.push(getItem('Atsijungti', logoutKey, <AppstoreOutlined />));
+  mainMenuItems.push(getItem('Atsijungti', logoutKey, <LogoutOutlined />));
 
   const onClick = (e) => {
     setSelectedItem(e.key);
@@ -56,17 +66,18 @@ const MainMenu = () => {
             style={{
                 width: 256
             }}
-            defaultSelectedKeys={[concreteKey]}
+            defaultSelectedKeys={[viewConcreteTestsKey]}
             defaultOpenKeys={[concreteKey]}
             mode="inline"
-            items={items}
+            items={mainMenuItems}
         />
         <div
             style={{
                 width: '40%',
             }}
         >
-            {selectedItem === concreteKey && <ConcreteList />}
+            {selectedItem === createConcreteTestKey  && <ConcreteList />}
+            {selectedItem === viewConcreteTestsKey  && <ConcreteCubeTrialList />}
             {selectedItem === usersKey && <Users />}
             {selectedItem === companiesKey && <Companies />}
         </div>
