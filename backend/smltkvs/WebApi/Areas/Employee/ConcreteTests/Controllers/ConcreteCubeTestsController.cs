@@ -116,7 +116,7 @@ public class ConcreteCubeTestsController : EmployeeControllerBase
             var executingUser = await _mediatr.Send(new GetUserQuery(test.TestExecutedByUserId));
             var executingUserCompany = await _mediatr.Send(new GetCompanyQuery(executingUser!.CompanyId));
 
-            var latexFile = ConcreteCubePermanentProtocolTemplate.GetFile(test, executingUserCompany, executingUser!.Name);
+            var latexFile = ConcreteCubeProtocol.GetFile(test, executingUserCompany, executingUser!.Name);
             var latexBytes = await _latexCompilerService.GetCompiledLatexPdf(latexFile);
 
 

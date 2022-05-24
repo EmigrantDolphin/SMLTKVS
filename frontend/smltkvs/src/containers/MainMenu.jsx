@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
-import { BorderOutlined, UserOutlined, LogoutOutlined, BankOutlined } from '@ant-design/icons';
+import { BorderOutlined, UserOutlined, LogoutOutlined, BankOutlined, ProfileOutlined } from '@ant-design/icons';
 import ConcreteList from './concreteTests/ConcreteList';
 import ConcreteCubeTrialList from './concreteTests/ConcreteCubeTrialList';
 import Users from './users/Users';
 import Companies from './companies/Companies';
 import { getLoggedInUser, logoutUser } from '../api/userActions';
 import { roles } from '../api/constants/roles';
+import ChangePassword from './profile/ChangePassword';
 import { useEffect } from 'react';
 
 function getItem(label, key, icon, children, type) {
@@ -19,6 +20,8 @@ const viewConcreteTestsKey = 'viewConcreteTestsKey';
 const usersKey = 'usersKey';
 const companiesKey = 'companiesKey'
 const logoutKey = 'logoutKey';
+const profileKey = 'profileKey';
+const changePasswordKey = 'changePasswordKey';
 
 const MainMenu = () => {
   const currentUserRole = getLoggedInUser().role;
@@ -40,6 +43,8 @@ const MainMenu = () => {
     mainMenuItems.push(getItem('Įmonės', companiesKey, <BankOutlined />));
   }
 
+  const profileSubMenu = [getItem('Keisti slaptažodį', changePasswordKey)];
+  mainMenuItems.push(getItem('Profilis', profileKey, <ProfileOutlined />, profileSubMenu));
   mainMenuItems.push(getItem('Atsijungti', logoutKey, <LogoutOutlined />));
 
   const onClick = (e) => {
@@ -80,6 +85,7 @@ const MainMenu = () => {
             {selectedItem === viewConcreteTestsKey  && <ConcreteCubeTrialList />}
             {selectedItem === usersKey && <Users />}
             {selectedItem === companiesKey && <Companies />}
+            {selectedItem === changePasswordKey && <ChangePassword />}
         </div>
     </div>
   );

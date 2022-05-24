@@ -23,4 +23,6 @@ public class User
         Name = name;
         //TODO: password hasher
     }
+
+    public void UpdatePassword(string newPassword) => Password = newPassword;
 }

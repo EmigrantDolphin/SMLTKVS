@@ -19,6 +19,12 @@ export const loginUser = async (username, password) => {
     return true;
 };
 
+export const changePassword = async (newPassword) => {
+    return await requestApi(apiPaths.postChangePassword, {
+        newPassword
+    }, restMethod.POST);
+};
+
 export const getLoggedInUser = () => {
     var auth = localStorage.getItem(localStorageKeys.authToken);
     if (!auth)

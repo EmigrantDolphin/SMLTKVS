@@ -1,8 +1,9 @@
 namespace Laboratory.Application.ProtocolTemplates;
 
-public class ConcreteCubePermanentProtocolTemplate
+public class ConcreteCubeInitialProtocolTemplate
 {
-    public static string Template => @"\documentclass[a4paper, 12pt]{article}
+    
+	public static string Template => @"\documentclass[a4paper, 12pt]{article}
 % \usepackage{amsmath,amscd,amsfonts,amssymb}
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -226,6 +227,12 @@ Bandymo rezultatai surasyti į~\ref{table:bandymu_rezultatai} lentelę.
 		\hline
 		1                        & ___testData[0]valueA[0]___ \\ ___testData[0]valueA[1]___ \\ ___testData[0]valueA[2]___ \\ ___testData[0]valueA[3]___ \\ ___testData[0]valueA[4]___ \\ ___testData[0]valueA[5]___ & ___testData[0]valueB[0]___ \\ ___testData[0]valueB[1]___ \\ ___testData[0]valueB[2]___ \\ ___testData[0]valueB[3]___ \\ ___testData[0]valueB[4]___ \\ ___testData[0]valueB[5]___ & ___testData[0]destructivePower___ & ___testData[0]crushingStrength___ & \small{___testData[0]comment___}  \\
 		\hline
+		\hline
+		2                        & ___testData[1]valueA[0]___ \\ ___testData[1]valueA[1]___ \\ ___testData[1]valueA[2]___ \\ ___testData[1]valueA[3]___ \\ ___testData[1]valueA[4]___ \\ ___testData[1]valueA[5]___ & ___testData[1]valueB[0]___ \\ ___testData[1]valueB[1]___ \\ ___testData[1]valueB[2]___ \\ ___testData[1]valueB[3]___ \\ ___testData[1]valueB[4]___ \\ ___testData[1]valueB[5]___ & ___testData[1]destructivePower___ & ___testData[1]crushingStrength___ & \small{___testData[1]comment___}  \\
+		\hline
+		\hline
+		3                        & ___testData[2]valueA[0]___ \\ ___testData[2]valueA[1]___ \\ ___testData[2]valueA[2]___ \\ ___testData[2]valueA[3]___ \\ ___testData[2]valueA[4]___ \\ ___testData[2]valueA[5]___ & ___testData[2]valueB[0]___ \\ ___testData[2]valueB[1]___ \\ ___testData[2]valueB[2]___ \\ ___testData[2]valueB[3]___ \\ ___testData[2]valueB[4]___ \\ ___testData[2]valueB[5]___ & ___testData[2]destructivePower___ & ___testData[2]crushingStrength___ & \small{___testData[2]comment___}  \\
+		\hline
 		
 	\end{tabular}%
 	
@@ -236,4 +243,3 @@ Bandymo rezultatai surasyti į~\ref{table:bandymu_rezultatai} lentelę.
 
 \end{document}";
 }
-

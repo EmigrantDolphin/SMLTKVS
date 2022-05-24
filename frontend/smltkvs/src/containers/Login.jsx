@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { loginUser } from '../api/userActions';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../routes';
@@ -42,10 +42,6 @@ const Login = () => {
                 rules={[{ required: true, message: 'Prašome įvesti prisijungimo slaptažodį!' }]}
             >
                 <Input.Password />
-            </Form.Item>
-
-            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 8 }}>
-                <Checkbox>Prisiminti mane</Checkbox>
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 8 }}>

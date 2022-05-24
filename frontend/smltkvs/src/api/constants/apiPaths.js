@@ -5,6 +5,7 @@ export const apiPaths = {
         clientAdmin: '/client-admin/user'
     },
     postLogin: '/auth/user/login',
+    postChangePassword: '/auth/user/change-password',
     getUsers: {
         admin: '/admin/users',
         employee: '/employee/users',

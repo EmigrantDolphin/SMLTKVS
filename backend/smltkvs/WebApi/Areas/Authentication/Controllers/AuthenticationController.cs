@@ -40,4 +40,20 @@ public class AuthenticationController : AuthenticationControllerBase
             return BadRequest(e.Message);
         }
     }
+    
+    [HttpPost("api/auth/user/change-password")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        try
+        {
+            await _mediatr.Send(request.Adapt<ChangePasswordCommand>() with { UserId = CurrentUserId });
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

@@ -73,7 +73,7 @@ public class ConcreteCubeTestsController : ClientControllerBase
             var executingUserCompany = await _mediatr.Send(new GetCompanyQuery(executingUser!.CompanyId));
 
             var latexFile =
-                ConcreteCubePermanentProtocolTemplate.GetFile(test, executingUserCompany, executingUser!.Name);
+                ConcreteCubeProtocol.GetFile(test, executingUserCompany, executingUser!.Name);
             var latexBytes = await _latexCompilerService.GetCompiledLatexPdf(latexFile);
 
             HttpContext.Response.Headers.ContentDisposition = "inline;filename=protocol.pdf";

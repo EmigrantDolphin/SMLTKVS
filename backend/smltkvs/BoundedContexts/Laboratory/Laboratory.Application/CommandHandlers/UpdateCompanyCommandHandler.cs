@@ -19,7 +19,9 @@ public class UpdateCompanyCommandHandler : IRequestHandler<UpdateCompanyCommand,
     
     public async Task<OneOf<Success, BadRequest>> Handle(UpdateCompanyCommand request, CancellationToken cancellationToken)
     {
-        var company = await _context.Companies.FirstOrDefaultAsync(x => x.CompanyId == request.CompanyId, cancellationToken);
+        var company = await _context.Companies
+        .Include(x => x.ConstructionSites)
+        .FirstOrDefaultAsync(x => x.CompanyId == request.CompanyId, cancellationToken);
         if (company is null)
         {
             return new BadRequest("Įmonė nerasta");

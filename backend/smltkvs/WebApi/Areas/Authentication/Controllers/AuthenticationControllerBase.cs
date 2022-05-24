@@ -4,4 +4,4 @@ namespace WebApi.Areas.Authentication.Controllers;
 
 [ApiController]
 [ApiExplorerSettings(GroupName = ApiAreas.Auth)]
-public abstract class AuthenticationControllerBase : ControllerBase { }
+public abstract class AuthenticationControllerBase : BaseController { }

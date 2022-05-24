@@ -9,24 +9,8 @@ import { testTypes } from '../../api/constants/testTypes';
 import { concreteTypes } from '../../api/constants/concreteTypes';
 import { routes } from '../../routes';
 import { useNavigate } from 'react-router-dom';
+import { concreteCubeCalculateAverageStrength, concreteCubeCalculateStandardDeviation } from '../../calculations/concreteCubeCalculations';
 const { Option } = Select;
-
-const calculateAverageStrength = (data) => {
-    const strengths = data.map(x => Number(x.strength));
-    const sumOfStrengths = strengths.reduce((a, b) => a + b, 0);
-    const average = sumOfStrengths / data.length;
-
-    return average;
-}
-
-const calculateStandardDeviation = (data, averageStrength) => {
-    const strengths = data.map(x => Number(x.strength));
-    let sq = strengths.reduce((sum, strength) => sum + ((strength - averageStrength) * (strength - averageStrength)));
-    sq = sq / (data.length /*- 1*/); // todo: if 1 test, this will divide by 0?????
-
-    const s = Math.sqrt(sq);
-    return s;
-}
 
 const ConcreteCubeTrial = () => {
     const [isSendingRequest, setIsSendingRequest] = useState(false);
@@ -37,8 +21,8 @@ const ConcreteCubeTrial = () => {
     const currentUser = getLoggedInUser();
 
     const onFinish = (values) => {
-        const averageStrength = calculateAverageStrength(values.testData);
-        const standardDeviation = calculateStandardDeviation(values.testData, averageStrength);
+        const averageStrength = concreteCubeCalculateAverageStrength(values.testData);
+        const standardDeviation = concreteCubeCalculateStandardDeviation(values.testData, averageStrength);
         console.log(standardDeviation);
 
         console.log('Success:', values);

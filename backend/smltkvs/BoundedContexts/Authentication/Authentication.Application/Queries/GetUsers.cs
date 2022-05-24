@@ -10,7 +10,7 @@ public class GetUsers : IGetUsers
 {
     private readonly IAuthenticationContext _context;
 
-    public GetUsers(IAuthenticationContext context)
+    public GetUsers(IAuthenticationContext context) //TODO: Convert to use mediator
     {
         _context = context;
     }
