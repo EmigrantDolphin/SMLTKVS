@@ -5,7 +5,6 @@ namespace WebApi.Areas.Employee.ConcreteTests.Models;
 
 public class ConcreteCubeTestRequest
 {
-    // public string TestProtocolNumber { get; set; }
     [Required]
     public Guid ClientCompanyId { get; set; }
     [Required]
@@ -36,12 +35,9 @@ public class ConcreteCubeTestRequest
     public int RejectedSampleCount { get; set; }
     [Required]
     public decimal AverageCrushForce { get; set; }
-    [Required]
-    public decimal StandardUncertainty { get; set; }
-    [Required]
-    public decimal ExtendedUncertainty { get; set; }
-    [Required]
-    public decimal StandardDeviation { get; set; }
+    public decimal? StandardUncertainty { get; set; }
+    public decimal? ExtendedUncertainty { get; set; }
+    public decimal? StandardDeviation { get; set; }
     [Required]
     public decimal CharacteristicStrength { get; set; }
     [Required]

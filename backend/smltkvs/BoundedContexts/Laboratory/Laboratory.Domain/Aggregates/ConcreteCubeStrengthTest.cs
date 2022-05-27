@@ -23,9 +23,9 @@ public class ConcreteCubeStrengthTest
     public int AcceptedSampleCount { get; private set; }
     public int RejectedSampleCount { get; private set; }
     public decimal AverageCrushForce { get; private set; }
-    public decimal StandardUncertainty { get; private set; }
-    public decimal ExtendedUncertainty { get; private set; }
-    public decimal StandardDeviation { get; private set; }
+    public decimal? StandardUncertainty { get; private set; }
+    public decimal? ExtendedUncertainty { get; private set; }
+    public decimal? StandardDeviation { get; private set; }
     public decimal CharacteristicStrength { get; private set; }
     public string ConcreteRating { get; private set; }
 
@@ -52,9 +52,9 @@ public class ConcreteCubeStrengthTest
         int acceptedSampleCount,
         int rejectedSampleCount,
         decimal averageCrushForce,
-        decimal standardUncertainty,
-        decimal extendedUncertainty,
-        decimal standardDeviation,
+        decimal? standardUncertainty,
+        decimal? extendedUncertainty,
+        decimal? standardDeviation,
         decimal characteristicStrength,
         string concreteRating,
         List<ConcreteCubeStrengthTestData> testData

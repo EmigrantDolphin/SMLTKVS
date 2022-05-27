@@ -40,9 +40,9 @@ public class ConcreteCubeStrengthTestEntityConfiguration : IEntityTypeConfigurat
         builder.Property(u => u.AcceptedSampleCount).IsRequired();
         builder.Property(u => u.RejectedSampleCount).IsRequired();
         builder.Property(u => u.AverageCrushForce).HasPrecision(15,5).IsRequired();
-        builder.Property(u => u.StandardUncertainty).HasPrecision(15,5).IsRequired();
-        builder.Property(u => u.ExtendedUncertainty).HasPrecision(15,5).IsRequired();
-        builder.Property(u => u.StandardDeviation).HasPrecision(15,5).IsRequired();
+        builder.Property(u => u.StandardUncertainty).HasPrecision(15,5).IsRequired(false);
+        builder.Property(u => u.ExtendedUncertainty).HasPrecision(15,5).IsRequired(false);
+        builder.Property(u => u.StandardDeviation).HasPrecision(15,5).IsRequired(false);
         builder.Property(u => u.CharacteristicStrength).HasPrecision(15,5).IsRequired();
         builder.Property(u => u.ConcreteRating).HasMaxLength(100).IsRequired();
 

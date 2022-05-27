@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Authentication.Application.Queries;
 using Authentication.Application.Queries.Interfaces;
 using Infrastructure.HttpClientFactories;
@@ -122,6 +123,23 @@ public class ConcreteCubeTestsController : EmployeeControllerBase
 
             HttpContext.Response.Headers.ContentDisposition = "inline;filename=protocol.pdf";
             return File(latexBytes, "application/pdf", "protocol.pdf");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpGet("api/employee/concrete/cube/tests/strengths/{constructionSiteId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetConcreteCubeTestStrengths([FromRoute, Required] Guid constructionSiteId)
+    {
+        try
+        {
+            var crushForces = await _mediatr.Send(new GetConcreteCubeTestStrengthsQuery(constructionSiteId));
+
+            return Ok(crushForces);
         }
         catch (Exception e)
         {

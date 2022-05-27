@@ -21,9 +21,9 @@ public record CreateConcreteCubeTestCommand(
         int AcceptedSampleCount,
         int RejectedSampleCount,
         decimal AverageCrushForce,
-        decimal StandardUncertainty,
-        decimal ExtendedUncertainty,
-        decimal StandardDeviation,
+        decimal? StandardUncertainty,
+        decimal? ExtendedUncertainty,
+        decimal? StandardDeviation,
         decimal CharacteristicStrength,
         string ConcreteRating,
         List<ConcreteCubeStrengthTestCommandData> TestData

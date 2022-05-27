@@ -1,4 +1,5 @@
 import { setConcreteCubeTest } from "../reducers/concreteCubeTest";
+import { setConcreteCubeTestCrushForces } from "../reducers/concreteCubeTestCrushForces";
 import { setConcreteCubeTests } from "../reducers/concreteCubeTests";
 import { apiPaths } from "./constants/apiPaths";
 import { roles } from "./constants/roles";
@@ -41,6 +42,17 @@ export const getConcreteCubeTest = async (dispatch, testId) => {
     if (!result.isOk) return;
     var json = await result.response.json();
     dispatch(setConcreteCubeTest(json));
+};
+
+export const getConcreteCubeTestCrushForces = async (dispatch, constructionSiteId) => {
+    const loggedInUserRole = getLoggedInUser().role;
+
+    let apiPath = apiPaths.postConcreteCubeTestCrushForces.replace('{constructionSiteId}', constructionSiteId);
+
+    var result = await requestApi(apiPath);
+    if (!result.isOk) return;
+    var arrayOfForces = await result.response.json();
+    dispatch(setConcreteCubeTestCrushForces(arrayOfForces));
 };
 
 export const getConcreteCubeTestProtocol = async (testId) => {

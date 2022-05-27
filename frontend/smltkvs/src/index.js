@@ -9,6 +9,7 @@ import usersReducer from './reducers/users';
 import companiesReducer from './reducers/companies';
 import concreteCubeTestsReducer from './reducers/concreteCubeTests';
 import concreteCubeTestReducer from './reducers/concreteCubeTest';
+import concreteCubeTestCrushForcesReducer from './reducers/concreteCubeTestCrushForces';
 
 const store = configureStore({
   reducer: {
@@ -16,9 +17,10 @@ const store = configureStore({
     users: usersReducer,
     companies: companiesReducer,
     concreteCubeTests: concreteCubeTestsReducer,
-    concreteCubeTest: concreteCubeTestReducer
+    concreteCubeTest: concreteCubeTestReducer,
+    concreteCubeTestCrushForces : concreteCubeTestCrushForcesReducer
   }
-})
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -13,6 +13,7 @@ export const apiPaths = {
         clientAdmin: '/client-admin/users'
     },
     postConcreteCubeTest: '/employee/concrete/cube/test',
+    postConcreteCubeTestCrushForces: '/employee/concrete/cube/tests/strengths/{constructionSiteId}',
     getConcreteCubeTestList: {
         employee:  '/employee/concrete/cube/tests',
         client:  '/client/concrete/cube/tests'
@@ -27,5 +28,5 @@ export const apiPaths = {
     },
     postCompany: '/company',
     getCompanies: '/companies',
-    putCompany: '/company/' // :todo figure out a better way to add variables
+    putCompany: '/company/'
 };

@@ -1,51 +1,111 @@
-import { testTypes } from "../api/constants/testTypes";
-
-export const isArrayFilled = (array) => {
-    return array.reduce((a, b) => a + (b === null ? 0 : 1), 0) === array.length;
-}
-
-
-export const concreteCubeCalculateAverageStrength = (data) => {
-    const strengths = data.map(x => Number(x.strength));
-    const sumOfStrengths = strengths.reduce((a, b) => a + b, 0);
-    const average = sumOfStrengths / data.length;
+export const concreteCubeCalculateAverageStrength = (crushForces) => {
+    const sumOfCrushForces = crushForces.reduce((a, b) => a + b, 0);
+    const average = sumOfCrushForces / crushForces.length;
 
     return average;
 }
 
-export const concreteCubeCalculateStandardDeviation = (data, averageStrength) => {
-    const strengths = data.map(x => Number(x.strength));
-    let sq = strengths.reduce((sum, strength) => sum + ((strength - averageStrength) * (strength - averageStrength)));
-    sq = sq / (data.length /*- 1*/); // todo: if 1 test, this will divide by 0?????
+export const concreteCubeCalculateStandardDeviation = (crushForces, averageStrength) => {
+    let sq = crushForces.reduce((sum, crushForce) => sum + ((crushForce - averageStrength) * (crushForce - averageStrength)));
+    sq = sq / (crushForces.length - 1);
 
     const s = Math.sqrt(sq);
     return s;
 }
 
-export const concreteCubeCalculateCharacteristicStrength = ( data, averageStrength ) => {
+export const concreteCubeCalculatePermanentTestCharacteristicStrength = ( crushForces, averageStrength, standardDeviation ) => {
+    const minimumCubeCrushForce = Math.min(...crushForces);
+    const minimumStrengthCubeCharacteristic = minimumCubeCrushForce + 4;
 
-    if (data.testType === testTypes.INITIAL) {
-        return concreteCubeCalculateInitialTestCharacteristicStrength(data, averageStrength);
-    }
-    else {
+    const averageStrengthCubeCharacteristic = averageStrength - (1.48 * standardDeviation);
 
-    }
+    return Math.min(minimumStrengthCubeCharacteristic, averageStrengthCubeCharacteristic);
 }
 
-//TODO: get all strengths from BE by constructionSiteID
-const concreteCubeCalculatePermanentTestCharacteristicStrength = ( strengths, averageStrength, standardDeviation ) => {
-    // calculate cube strength average from this + 35 from DB
-    // substract 1.48 times standardDeviation calculated from DB data?
-
-    //get minimum strength from DB + 4
-}
-
-const concreteCubeCalculateInitialTestCharacteristicStrength = ( data, averageStrength ) => {
-    const cubeStrengths = data.map(x => Number(x.strength))
-    const minimumCubeStrength = Math.min(...cubeStrengths);
-    const minimumStrengthCubeCharacteristic = minimumCubeStrength + 4;
+export const concreteCubeCalculateInitialTestCharacteristicStrength = ( cubeCrushForces, averageStrength ) => {
+    const minimumCubeCrushForce = Math.min(...cubeCrushForces);
+    const minimumStrengthCubeCharacteristic = minimumCubeCrushForce + 4;
 
     const averageStrengthCubeCharacteristic = averageStrength - 4;
 
     return Math.min(minimumStrengthCubeCharacteristic, averageStrengthCubeCharacteristic);
+}
+
+export const concreteCubeCalculateConcreteClass = (characteristicStrength) => {
+    const classSet = [
+    {
+        value: 10,
+        name: 'C8/10'
+    },
+    {
+        value: 15,
+        name: 'C12/15'
+    },
+    {
+        value: 20,
+        name: 'C16/20'
+    },
+    {
+        value: 25,
+        name: 'C20/25'
+    },
+    {
+        value: 30,
+        name: 'C25/30'
+    },
+    {
+        value: 37,
+        name: 'C30/37'
+    },
+    {
+        value: 45,
+        name: 'C35/45'
+    },
+    {
+        value: 50,
+        name: 'C40/50'
+    },
+    {
+        value: 55,
+        name: 'C45/55'
+    },
+    {
+        value: 60,
+        name: 'C50/60'
+    },
+    {
+        value: 67,
+        name: 'C55/67'
+    },
+    {
+        value: 75,
+        name: 'C60/75'
+    },
+    {
+        value: 85,
+        name: 'C70/85'
+    },
+    {
+        value: 95,
+        name: 'C80/95'
+    },
+    {
+        value: 105,
+        name: 'C90/105'
+    },
+    {
+        value: 115,
+        name: 'C100/115'
+    },
+    ];
+
+    let previousClass = classSet[0];
+    for (const concreteClass of classSet) {
+        if (concreteClass.value > characteristicStrength){
+            return previousClass.name;
+        }
+        else {
+            previousClass = concreteClass;
+        }
+    }
 }

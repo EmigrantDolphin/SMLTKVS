@@ -32,9 +32,32 @@ public static class ConcreteCubeProtocol
 		builder.Replace("___acceptedSampleCount___", data.AcceptedSampleCount.ToString());
 		builder.Replace("___rejectedSampleCount___", data.RejectedSampleCount.ToString());
 		builder.Replace("___averageCrushForce___", data.AverageCrushForce.ToString("F"));
-		builder.Replace("___standardUncertainty___", data.StandardUncertainty.ToString("F"));
-		builder.Replace("___extendedUncertainty___", data.ExtendedUncertainty.ToString("F"));
-		builder.Replace("___standardDeviation___", data.StandardDeviation.ToString("F"));
+		if (data.StandardUncertainty is not null)
+		{
+			builder.Replace("___standardUncertainty___", data.StandardUncertainty.Value.ToString("F"));
+		}
+		else
+		{
+			builder.Replace("___standardUncertainty___", "-");
+		}
+
+		if (data.ExtendedUncertainty is not null)
+		{
+			builder.Replace("___extendedUncertainty___", data.ExtendedUncertainty.Value.ToString("F"));
+		}
+		else
+		{
+			builder.Replace("___extendedUncertainty___", "-");
+		}
+
+		if (data.StandardDeviation is not null)
+		{
+			builder.Replace("___standardDeviation___", data.StandardDeviation.Value.ToString("F"));
+		}
+		else
+		{
+			builder.Replace("___standardDeviation___", "-");
+		}
 		builder.Replace("___characteristicStrength___", data.CharacteristicStrength.ToString("F"));
 		builder.Replace("___concreteRating___", data.ConcreteRating);
 		for (int i = 0; i < data.TestData.Count; i++)

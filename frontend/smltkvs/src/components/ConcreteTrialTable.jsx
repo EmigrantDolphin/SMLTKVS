@@ -1,6 +1,7 @@
 import React from 'react';
-import { Table, InputNumber } from 'antd';
+import { Table, InputNumber, Input } from 'antd';
 import { isArrayFilled } from '../utilities/isArrayFilled';
+const { TextArea } = Input;
 
 const initialData = {
     key: 0,
@@ -13,8 +14,7 @@ const initialData = {
     },
     destructivePower: null,
     strength: null,
-    comments: null,
-    pictures: null
+    comments: null
 };
 
 const calculateStrength = (newData, testIndex) => {
@@ -70,6 +70,12 @@ const ConcreteTrialTable = ({ onChange, value, acceptedSampleCount }) => {
         onDataChange(newData, testIndex);
     }
 
+    const onCommentChanged = (inputValue, testIndex) => {
+        let newData = value || getInitialData(acceptedSampleCount);
+        newData[testIndex] = {...newData[testIndex], comments: inputValue};
+        onDataChange(newData, testIndex);
+    }
+
     const onDataChange = (newData, testIndex) => {
         newData = calculateStrength(newData, testIndex);
         onChange(newData);
@@ -104,12 +110,12 @@ const ConcreteTrialTable = ({ onChange, value, acceptedSampleCount }) => {
                 render: (_, rowData, index) => {
                     return (
                         <>
-                            <InputNumber size='small' required controls={false} value={rowData.valueA.values[0]} onChange={(val) => onValueAChange(val, index, 0)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueA.values[1]} onChange={(val) => onValueAChange(val, index, 1)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueA.values[2]} onChange={(val) => onValueAChange(val, index, 2)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueA.values[3]} onChange={(val) => onValueAChange(val, index, 3)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueA.values[4]} onChange={(val) => onValueAChange(val, index, 4)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueA.values[5]} onChange={(val) => onValueAChange(val, index, 5)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueA.values[0]} onChange={(val) => onValueAChange(val, index, 0)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueA.values[1]} onChange={(val) => onValueAChange(val, index, 1)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueA.values[2]} onChange={(val) => onValueAChange(val, index, 2)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueA.values[3]} onChange={(val) => onValueAChange(val, index, 3)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueA.values[4]} onChange={(val) => onValueAChange(val, index, 4)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueA.values[5]} onChange={(val) => onValueAChange(val, index, 5)}/>
                         </>
                     );
                 }
@@ -122,12 +128,12 @@ const ConcreteTrialTable = ({ onChange, value, acceptedSampleCount }) => {
                 render: (_, rowData, index) => {
                     return (
                         <>
-                            <InputNumber size='small' required controls={false} value={rowData.valueB.values[0]} onChange={(val) => onValueBChange(val, index, 0)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueB.values[1]} onChange={(val) => onValueBChange(val, index, 1)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueB.values[2]} onChange={(val) => onValueBChange(val, index, 2)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueB.values[3]} onChange={(val) => onValueBChange(val, index, 3)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueB.values[4]} onChange={(val) => onValueBChange(val, index, 4)}/>
-                            <InputNumber size='small' required controls={false} value={rowData.valueB.values[5]} onChange={(val) => onValueBChange(val, index, 5)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueB.values[0]} onChange={(val) => onValueBChange(val, index, 0)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueB.values[1]} onChange={(val) => onValueBChange(val, index, 1)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueB.values[2]} onChange={(val) => onValueBChange(val, index, 2)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueB.values[3]} onChange={(val) => onValueBChange(val, index, 3)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueB.values[4]} onChange={(val) => onValueBChange(val, index, 4)}/>
+                            <InputNumber min={100} size='small' required controls={false} value={rowData.valueB.values[5]} onChange={(val) => onValueBChange(val, index, 5)}/>
                         </>
                     );
                 }
@@ -145,6 +151,7 @@ const ConcreteTrialTable = ({ onChange, value, acceptedSampleCount }) => {
                         <InputNumber
                             required
                             controls={false}
+                            min={0}
                             value={rowData.destructivePower}
                             onChange={(val) => onDestructivePowerChange(val, index)}
                         />
@@ -163,13 +170,15 @@ const ConcreteTrialTable = ({ onChange, value, acceptedSampleCount }) => {
             dataIndex: 'comments',
             key: 'comments',
             width: 80,
-        },
-        {
-            title: 'Nuotraukos',
-            dataIndex: 'pictures',
-            key: 'pictures',
-            width: 80,
-        },
+            render: (_, rowData, index) => {
+                return (
+                <TextArea
+                    value={rowData.comments}
+                    onChange={(event) => onCommentChanged(event.target.value, index)}
+                />
+                );
+            }
+        }
     ];
 
     return (
