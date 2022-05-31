@@ -84,4 +84,37 @@ public class ConcreteCubeStrengthTest
         ConcreteRating = concreteRating;
         TestData = testData;
     }
+
+    public void Update(
+        DateTimeOffset testExecutionDate,
+        DateTimeOffset testSamplesReceivedDate,
+        string testSamplesDeliveredBy,
+        string testSamplesReceivedComment,
+        int testSamplesReceivedCount,
+        ConcreteType concreteType,
+        int acceptedSampleCount,
+        int rejectedSampleCount,
+        decimal averageCrushForce,
+        decimal? standardUncertainty,
+        decimal? extendedUncertainty,
+        decimal? standardDeviation,
+        decimal characteristicStrength,
+        string concreteRating
+    )
+    {
+        TestExecutionDate = testExecutionDate;
+        TestSamplesReceivedDate = testSamplesReceivedDate;
+        TestSamplesDeliveredBy = testSamplesDeliveredBy;
+        TestSamplesReceivedComment = testSamplesReceivedComment;
+        TestSamplesReceivedCount = testSamplesReceivedCount;
+        ConcreteType = concreteType;
+        AcceptedSampleCount = acceptedSampleCount;
+        RejectedSampleCount = rejectedSampleCount;
+        AverageCrushForce = averageCrushForce;
+        StandardUncertainty = standardUncertainty;
+        ExtendedUncertainty = extendedUncertainty;
+        StandardDeviation = standardDeviation;
+        CharacteristicStrength = characteristicStrength;
+        ConcreteRating = concreteRating;
+    }
 }

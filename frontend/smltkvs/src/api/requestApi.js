@@ -12,7 +12,8 @@ export const restMethod = {
 export const requestApi = async (api, data = undefined, requestMethod = restMethod.GET) => {
     const auth = JSON.parse(localStorage.getItem(localStorageKeys.authToken));
 
-    var response = await fetch(`https://localhost:7062/api${api}`, {
+    var response = await fetch(`https://bakis-api-nb.azurewebsites.net/api${api}`, {
+    // var response = await fetch(`https://localhost:7062/api${api}`, {
         method: requestMethod,
         body: data && JSON.stringify(data),
         headers: {

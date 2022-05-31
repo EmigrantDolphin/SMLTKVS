@@ -20,7 +20,7 @@ const initialData = {
 const calculateStrength = (newData, testIndex) => {
     const aValues = newData[testIndex].valueA.values;
     const bValues = newData[testIndex].valueB.values;
-    const destructivePower = newData[testIndex].destructivePower;
+    const destructivePower = newData[testIndex].destructivePower * 1000;
     
     if (
         isArrayFilled(aValues) &&

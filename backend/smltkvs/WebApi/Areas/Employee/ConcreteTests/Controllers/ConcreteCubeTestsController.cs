@@ -49,6 +49,28 @@ public class ConcreteCubeTestsController : EmployeeControllerBase
         }
     }
     
+    [HttpPut("api/employee/concrete/cube/test/{testId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateConcreteCubeTest([FromRoute] Guid testId, [FromBody] ConcreteCubeTestRequest request)
+    {
+        try
+        {
+            var result = await _mediatr.Send(request.Adapt<UpdateConcreteCubeTestCommand>() with {ConcreteCubeTestId = testId});
+
+            if (result.IsSuccess())
+            {
+                return Ok();
+            }
+
+            return BadRequest(result.AsError().Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
     [HttpGet("api/employee/concrete/cube/tests")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

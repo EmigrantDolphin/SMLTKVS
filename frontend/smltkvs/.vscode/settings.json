@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/78c58c8b-7517-46bb-8aee-32a42b9edb80/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/bakis-fe-nb",
+    "appService.deploySubpath": "."
+}

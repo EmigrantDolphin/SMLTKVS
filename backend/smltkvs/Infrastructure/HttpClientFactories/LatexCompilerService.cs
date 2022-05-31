@@ -15,7 +15,7 @@ public class LatexCompilerService : ILatexCompilerService
     public async Task<byte[]> GetCompiledLatexPdf(string latexFile)
     {
         var urlEncodedFile = HttpUtility.UrlEncode(latexFile);
-        var url = "http://localhost:2700/compile?text=" + urlEncodedFile; //TODO: move url to appsettings
+        var url = "https://latex-bakis-nb.azurewebsites.net/compile?text=" + urlEncodedFile; //TODO: move url to appsettings
 
         var result2 = await _httpClient.GetAsync(url);
 

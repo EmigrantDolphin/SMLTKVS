@@ -13,6 +13,7 @@ export const apiPaths = {
         clientAdmin: '/client-admin/users'
     },
     postConcreteCubeTest: '/employee/concrete/cube/test',
+    putConcreteCubeTest: '/employee/concrete/cube/test/{testId}',
     postConcreteCubeTestCrushForces: '/employee/concrete/cube/tests/strengths/{constructionSiteId}',
     getConcreteCubeTestList: {
         employee:  '/employee/concrete/cube/tests',

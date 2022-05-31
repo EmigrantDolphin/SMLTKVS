@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { Form, DatePicker, Button, Input, notification, Select, InputNumber } from 'antd';
-import CompanyAutoComplete from '../../components/CompanyAutoComplete';
 import moment from 'moment';
-import { getLoggedInUser } from '../../api/userActions';
 import ConcreteTrialTable from '../../components/ConcreteTrialTable';
-import { createConcreteCubeTest, getConcreteCubeTestCrushForces } from '../../api/concreteCubeTestActions';
+import { getConcreteCubeTest, getConcreteCubeTestCrushForces, updateConcreteCubeTest } from '../../api/concreteCubeTestActions';
 import { testTypes } from '../../api/constants/testTypes';
 import { concreteTypes } from '../../api/constants/concreteTypes';
 import { routes } from '../../routes';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     concreteCubeCalculateAverageStrength,
     concreteCubeCalculateStandardDeviation,
@@ -20,28 +18,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 const { Option } = Select;
 
-const ConcreteCubeTrial = () => {
+const ConcreteCubeTrialEdit = () => {
     const dispatch = useDispatch();
     const constructionSiteTestCrushForces = useSelector(state => state.concreteCubeTestCrushForces.value);
     const [isSendingRequest, setIsSendingRequest] = useState(false);
     const [acceptedSampleCount, setAcceptedSampleCount] = useState(1);
-    const [selectedCompany, setSelectedCompany] = useState(null);
+    const [backendData, setBackendData] = useState(null);
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    const currentUser = getLoggedInUser();
+    const testId = useLocation().state.concreteCubeTestId;
 
     const onFinish = (values) => {
         let crushForces = null
         let standardDeviation = null;
         let characteristicStrength = null;
 
-        if (values.testType === testTypes.INITIAL) {
+        if (backendData.testType === testTypes.INITIAL) {
             crushForces = values.testData.map(x => Number(x.strength));
         } else {
             crushForces = [...constructionSiteTestCrushForces];
             values.testData.forEach(x => crushForces.push(Number(x.strength)));
         }
-
         const averageStrength = concreteCubeCalculateAverageStrength(crushForces);
 
         if (values.testType === testTypes.INITIAL) {
@@ -54,17 +51,17 @@ const ConcreteCubeTrial = () => {
         const concreteRating = concreteCubeCalculateConcreteClass(characteristicStrength);
 
         const postObject = {
-            clientCompanyId: values.companyid,
-            clientConstructionSiteId: values.clientConstructionSiteId,
-            employeeCompanyId: currentUser.CompanyId,
+            clientCompanyId: backendData.clientCompanyId,
+            clientConstructionSiteId: backendData.clientConstructionSiteId,
+            employeeCompanyId: backendData.employeeCompanyId,
             testExecutionDate: values.testExecutionDate,
             testSamplesReceivedDate: values.testSamplesReceivedDate,
             testSamplesDeliveredBy: values.testSamplesDeliveredBy,
             testSamplesReceivedComment: values.testSamplesReceivedComment,
             testSamplesReceivedCount: values.testSamplesReceivedCount,
-            testExecutedByUserId: currentUser.userId,
-            protocolCreatedByUserId: currentUser.userId,
-            testType: values.testType,
+            testExecutedByUserId: backendData.testExecutedByUserId,
+            protocolCreatedByUserId: backendData.protocolCreatedByUserId,
+            testType: backendData.testType,
             concreteType: values.concreteType,
             acceptedSampleCount: values.acceptedSampleCount,
             rejectedSampleCount: values.rejectedSampleCount,
@@ -84,15 +81,15 @@ const ConcreteCubeTrial = () => {
                 }
             })
         };
-        
+
         setIsSendingRequest(true);
-        createConcreteCubeTest(postObject)
+        updateConcreteCubeTest(postObject, testId)
             .then(response => {
                 setIsSendingRequest(false);
                 if (response.isOk) {
                     notification.success({
                         message: 'Sėkmė!',
-                        description: 'Bandymas atliktas sėkmingai'
+                        description: 'Bandymas atnaujintas sėkmingai'
                     });
                     navigate(routes.home);
                 }
@@ -103,25 +100,36 @@ const ConcreteCubeTrial = () => {
         console.log('Failed:', errorInfo);
     };
 
-    const changeSelectedCompany = (company) => {
-        form.setFieldsValue({clientConstructionSiteId: null});
-        setSelectedCompany(company);
-    };
-
-    const onConstructionSiteSelect = (constructionSiteId) => {
-        getConcreteCubeTestCrushForces(dispatch, constructionSiteId);
-    };
-
     useEffect(() => {
-        if (constructionSiteTestCrushForces.length >= 34) {
-            form.setFieldsValue({acceptedSampleCount: 1, testType: testTypes.PERMANENT, testData: undefined})
-            setAcceptedSampleCount(1);
-        }
-        else {
-            form.setFieldsValue({acceptedSampleCount: 3, testType: testTypes.INITIAL, testData: undefined})
-            setAcceptedSampleCount(3);
-        }
-    }, [constructionSiteTestCrushForces, form, setAcceptedSampleCount]);
+        getConcreteCubeTest(dispatch, testId)
+            .then((result) => {
+                let data = {...result};
+                data.testExecutionDate = moment(result.testExecutionDate);
+                data.testSamplesReceivedDate = moment(result.testSamplesReceivedDate);
+                data.testTypeName = result.testType === testTypes.INITIAL ? 'Pradinis' : 'Nuolatinis';
+                data.companyName = result.clientCompany.name;
+                data.constructionSiteName = result.clientConstructionSite.name;
+                data.testData = result.testData.map((item, index) => {
+                    return {
+                        testNumber: index,
+                        comments: item.comment,
+                        concreteCubeStrengthTestDataId: item.concreteCubeStrengthTestDataId,
+                        strength: item.crushingStrength,
+                        destructivePower: item.destructivePower,
+                        valueA: {
+                            values: item.valueA
+                        },
+                        valueB: {
+                            values: item.valueB
+                        }
+                    };
+                })
+
+                form.setFieldsValue(data)
+                setBackendData(result);
+                getConcreteCubeTestCrushForces(dispatch, result.clientConstructionSiteId);
+            });
+    }, [dispatch, testId, form]);
 
     return (
         <Form
@@ -136,30 +144,18 @@ const ConcreteCubeTrial = () => {
         >
             <Form.Item
                 label='Užsakovas'
-                name='companyid'
+                name='companyName'
                 rules={[{ required: true, message: 'Prašome pasirinkti kliento įmonę iš sąrašo' }]}
             >
-                <CompanyAutoComplete onCompanySelect={(company) => changeSelectedCompany(company)}/>
+                <Input disabled style={{color:'black'}} />
             </Form.Item>
 
             <Form.Item
                 label='Užsakovo statybos objektas'
-                name='clientConstructionSiteId'
+                name='constructionSiteName'
                 rules={[{ required: true }]}
             >
-                <Select
-                    disabled={!selectedCompany}
-                    onSelect={(id) => onConstructionSiteSelect(id)}
-                >
-                    {selectedCompany && selectedCompany.constructionSites?.map((site, index) => 
-                        <Option
-                            key={index}
-                            value={site.constructionSiteId}
-                        >
-                            {site.name}
-                        </Option>
-                    )}
-                </Select>
+                <Input disabled style={{color:'black'}}/>
             </Form.Item>
 
             <Form.Item
@@ -201,16 +197,10 @@ const ConcreteCubeTrial = () => {
 
             <Form.Item
                 label='Bandymo tipas'
-                name='testType'
+                name='testTypeName'
                 rules={[{ required: true }]}
             >
-                <Select
-                    disabled
-                    showArrow={false}
-                >
-                    <Option value={testTypes.INITIAL}><span style={{color:'black'}}>Pradinis</span></Option>
-                    <Option value={testTypes.PERMANENT}><span style={{color:'black'}}>Nuolatinis</span></Option>
-                </Select>
+                <Input disabled style={{color:'black'}} />
             </Form.Item>
 
             <Form.Item
@@ -252,8 +242,7 @@ const ConcreteCubeTrial = () => {
 
             <Form.Item
                 label='Bandytojas'
-                name='testUserName'
-                initialValue={currentUser.username}
+                name='testExecutedByUserName'
                 rules={[{ required: true, message: 'Įveskite bandytojo vardą' }]}
             >
                 <Input disabled style={{color: 'black'}}/>
@@ -282,4 +271,4 @@ const ConcreteCubeTrial = () => {
     );
 };
 
-export default ConcreteCubeTrial;
+export default ConcreteCubeTrialEdit;

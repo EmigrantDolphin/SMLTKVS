@@ -5,6 +5,7 @@ import Profile from './components/Profile';
 import Login from './containers/Login';
 import MainMenu from './containers/MainMenu';
 import ConcreteCubeTrial from './containers/concreteTests/ConcreteCubeTrial';
+import ConcreteCubeTrialEdit from './containers/concreteTests/ConcreteCubeTrialEdit';
 import { routes } from './routes';
 import ConcreteCubeTrialView from './containers/concreteTests/ConcreteCubeTrialView';
 
@@ -17,6 +18,7 @@ function App() {
           <Route path={routes.home} element={<MainMenu />} />
           <Route path={routes.login} element={<Login />} />
           <Route path={routes.concreteCubeTrial} element={<ConcreteCubeTrial />} />
+          <Route path={routes.concreteCubeTrialEdit} element={<ConcreteCubeTrialEdit />} />
           <Route path={routes.concreteCubeTrialView} element={<ConcreteCubeTrialView />} />
         </Routes>
       </div>

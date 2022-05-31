@@ -43,6 +43,7 @@ const CompanyAutoComplete = (props) => {
         <>
             <AutoComplete
                 options={options}
+                disabled={props.disabled}
                 onSearch={(searchText) => onSearch(companies, searchText)}
                 style={{
                     width: 200,

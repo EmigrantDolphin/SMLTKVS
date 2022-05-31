@@ -12,6 +12,13 @@ export const createConcreteCubeTest = async (
     return requestApi(apiPaths.postConcreteCubeTest, data, restMethod.POST);
 };
 
+export const updateConcreteCubeTest = async (
+    data, testId
+) => {
+    const apiPath = apiPaths.putConcreteCubeTest.replace('{testId}', testId)
+    return requestApi(apiPath, data, restMethod.PUT);
+};
+
 export const getConcreteCubeTestList = async (dispatch) => {
     const loggedInUserRole = getLoggedInUser().role;
 
@@ -42,11 +49,10 @@ export const getConcreteCubeTest = async (dispatch, testId) => {
     if (!result.isOk) return;
     var json = await result.response.json();
     dispatch(setConcreteCubeTest(json));
+    return json;
 };
 
 export const getConcreteCubeTestCrushForces = async (dispatch, constructionSiteId) => {
-    const loggedInUserRole = getLoggedInUser().role;
-
     let apiPath = apiPaths.postConcreteCubeTestCrushForces.replace('{constructionSiteId}', constructionSiteId);
 
     var result = await requestApi(apiPath);

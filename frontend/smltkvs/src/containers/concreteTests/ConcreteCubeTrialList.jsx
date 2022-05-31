@@ -2,8 +2,10 @@ import { Table, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConcreteCubeTestList, getConcreteCubeTestProtocol } from '../../api/concreteCubeTestActions';
-import { FilePdfOutlined } from '@ant-design/icons';
+import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
 import { testTypes } from '../../api/constants/testTypes';
+import { routes } from '../../routes';
+import { useNavigate } from 'react-router-dom';
 
 
 const getConcreteCubeTestData = (concreteCubeTests) => {
@@ -14,6 +16,7 @@ const ConcreteCubeTrialList = () => {
     const [downloadingPdfId, setDownloadingPdfId] = useState(null);
     const dispatch = useDispatch();
     const concreteCubeTests = useSelector((state) => state.concreteCubeTests.value);
+    const navigate = useNavigate();
 
     const getProtocol = (testId) => {
         setDownloadingPdfId(testId);
@@ -62,13 +65,21 @@ const ConcreteCubeTrialList = () => {
             {
                 title: '',
                 render: (_, item) => 
-                    <Button
-                        icon={<FilePdfOutlined />}
-                        size='small'
-                        disabled={item.concreteCubeTestId === downloadingPdfId}
-                        // onClick={() => navigate(routes.concreteCubeTrialView, {state: {concreteCubeTestId: item.concreteCubeTestId}})}
-                        onClick={() => getProtocol(item.concreteCubeTestId)}
-                    />
+                    <>
+                        <Button
+                            icon={<EditOutlined />}
+                            size='small'
+                            style={{marginBottom: '2px'}}
+                            disabled={item.concreteCubeTestId === downloadingPdfId}
+                            onClick={() => navigate(routes.concreteCubeTrialEdit, {state: {concreteCubeTestId: item.concreteCubeTestId}})}
+                        />
+                        <Button
+                            icon={<FilePdfOutlined />}
+                            size='small'
+                            disabled={item.concreteCubeTestId === downloadingPdfId}
+                            onClick={() => getProtocol(item.concreteCubeTestId)}
+                        />
+                    </>
             }
         ];
 

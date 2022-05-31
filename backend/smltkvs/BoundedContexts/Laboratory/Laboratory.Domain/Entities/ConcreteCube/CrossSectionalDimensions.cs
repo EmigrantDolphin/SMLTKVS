@@ -27,4 +27,6 @@ public class CrossSectionalDimensions
 
         return aDimension.Concat(bDimension).ToList();
     }
+
+    public void Update(decimal value) => Value = value;
 }
