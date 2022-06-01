@@ -6,6 +6,8 @@ import { FilePdfOutlined, EditOutlined } from '@ant-design/icons';
 import { testTypes } from '../../api/constants/testTypes';
 import { routes } from '../../routes';
 import { useNavigate } from 'react-router-dom';
+import { getLoggedInUser } from '../../api/userActions';
+import { roles } from '../../api/constants/roles';
 
 
 const getConcreteCubeTestData = (concreteCubeTests) => {
@@ -13,6 +15,7 @@ const getConcreteCubeTestData = (concreteCubeTests) => {
 }
 
 const ConcreteCubeTrialList = () => {
+    const currentUserRole = getLoggedInUser().role;
     const [downloadingPdfId, setDownloadingPdfId] = useState(null);
     const dispatch = useDispatch();
     const concreteCubeTests = useSelector((state) => state.concreteCubeTests.value);
@@ -66,6 +69,7 @@ const ConcreteCubeTrialList = () => {
                 title: '',
                 render: (_, item) => 
                     <>
+                    {(currentUserRole === roles.employee || currentUserRole === roles.admin) && (
                         <Button
                             icon={<EditOutlined />}
                             size='small'
@@ -73,6 +77,7 @@ const ConcreteCubeTrialList = () => {
                             disabled={item.concreteCubeTestId === downloadingPdfId}
                             onClick={() => navigate(routes.concreteCubeTrialEdit, {state: {concreteCubeTestId: item.concreteCubeTestId}})}
                         />
+                    )}
                         <Button
                             icon={<FilePdfOutlined />}
                             size='small'
